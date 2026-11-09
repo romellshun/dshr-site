@@ -272,6 +272,8 @@ img, svg { max-width: 100%; }
 .sidebar-card a:hover { color: var(--accent); }
 
 .sidebar-footer { margin: 22px 12px 0; font-size: .72rem; color: var(--muted); display: flex; align-items: center; gap: 7px; }
+.sidebar-credit { margin: 16px 12px 0; font-size: .72rem; line-height: 1.5; color: var(--muted); }
+.sidebar-credit strong { color: var(--accent); font-weight: 600; letter-spacing: .01em; }
 .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--ok); box-shadow: 0 0 0 4px color-mix(in srgb, var(--ok) 18%, transparent); }
 
 main { padding: 34px clamp(16px, 4vw, 56px) 90px; min-width: 0; }
