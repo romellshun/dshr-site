@@ -913,9 +913,12 @@ pre code { background: none; padding: 0; color: inherit; }
   position: fixed;
   inset: var(--topbar-h) 0 0 0;
   background: rgba(0, 0, 0, .55);
+  -webkit-backdrop-filter: blur(2px);
   backdrop-filter: blur(2px);
-  z-index: 95;
+  z-index: 5;
+  animation: overlayIn .2s ease both;
 }
+@keyframes overlayIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* ---------- Подсветка перехода ---------- */
 .flash { animation: flash 1.8s ease; }
