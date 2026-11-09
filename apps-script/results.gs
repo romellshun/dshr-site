@@ -50,8 +50,9 @@ function doPost(e) {
 
   try {
     var data = parsePayload(e);
-    if (!data || !data.id) {
-      return json({ ok: false, error: 'empty payload' });
+    var id = String((data && data.id) || '');
+    if (!/^[a-zA-Z0-9-]{6,80}$/.test(id)) {
+      return json({ ok: false, error: 'empty or invalid payload id' });
     }
 
     var ss = SPREADSHEET_ID
@@ -81,7 +82,7 @@ function doPost(e) {
     if (lastRow > 1) {
       var ids = sheet.getRange(2, 1, lastRow - 1, 1).getValues();
       for (var i = 0; i < ids.length; i++) {
-        if (String(ids[i][0]) === String(data.id)) {
+        if (String(ids[i][0]) === id) {
           return json({ ok: true, duplicate: true });
         }
       }
@@ -106,7 +107,7 @@ function doPost(e) {
     });
 
     sheet.appendRow([
-      data.id,
+      id,
       new Date(),
       safeCell(data.nickname),
       safeCell(data.staticId),
@@ -128,7 +129,7 @@ function doPost(e) {
       JSON.stringify(data.answers || [])
     ]);
 
-    return json({ ok: true, id: data.id });
+    return json({ ok: true, id: id });
   } catch (err) {
     return json({ ok: false, error: String(err) });
   } finally {
@@ -143,7 +144,7 @@ function topicScore(t) {
 
 /* Не даём значениям из формы превратиться в формулы Google Таблиц. */
 function safeCell(value) {
-  var s = String(value === null || typeof value === 'undefined' ? '' : value);
+  var s = String(value === null || typeof value === 'undefined' ? '' : value).slice(0, 300);
   return /^[=+\-@]/.test(s) ? "'" + s : s;
 }
 
