@@ -294,9 +294,9 @@ function normText_(value) {
     .replace(/\s+/g, ' ');
 }
 
-function sameCandidate_(rowStatic, rowNick, staticId, nickname) {
-  return normText_(rowStatic) === normText_(staticId) &&
-    normText_(rowNick) === normText_(nickname);
+/* Кандидат определяется по статик-ID: смена никнейма не открывает новую попытку. */
+function sameCandidate_(rowStatic, staticId) {
+  return normText_(rowStatic) === normText_(staticId);
 }
 
 function resultExists_(sheet, id) {
@@ -314,7 +314,7 @@ function findAttempts_(sheet, staticId, nickname) {
 
   var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, 9).getValues();
   for (var i = 0; i < values.length; i++) {
-    if (sameCandidate_(values[i][3], values[i][2], staticId, nickname)) {
+    if (sameCandidate_(values[i][3], staticId)) {
       var sentAt = values[i][1];
       out.push({
         row: i + 2,
@@ -336,7 +336,7 @@ function findActivePermissionRow_(sheet, staticId, nickname) {
   var found = 0;
   var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
   for (var i = 0; i < values.length; i++) {
-    if (sameCandidate_(values[i][0], values[i][1], staticId, nickname) &&
+    if (sameCandidate_(values[i][0], staticId) &&
         String(values[i][2] || '').trim() === STATUS_ALLOWED) {
       found = i + 2;
     }
@@ -350,7 +350,7 @@ function consumePermissions_(sheet, staticId, nickname, resultId) {
   var used = false;
   var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
   for (var i = 0; i < values.length; i++) {
-    if (sameCandidate_(values[i][0], values[i][1], staticId, nickname) &&
+    if (sameCandidate_(values[i][0], staticId) &&
         String(values[i][2] || '').trim() === STATUS_ALLOWED) {
       sheet.getRange(i + 2, 3).setValue(STATUS_USED);
       sheet.getRange(i + 2, 6).setValue(resultId);
@@ -472,7 +472,7 @@ function grantPermission_(ss, staticId, nickname, comment) {
 
     /* Уже есть действующее разрешение — просто обновляем дату выдачи. */
     for (var i = 0; i < values.length; i++) {
-      if (sameCandidate_(values[i][0], values[i][1], staticId, nickname) &&
+      if (sameCandidate_(values[i][0], staticId) &&
           String(values[i][2] || '').trim() === STATUS_ALLOWED) {
         sheet.getRange(i + 2, 4).setValue(now);
         return false;
@@ -481,7 +481,7 @@ function grantPermission_(ss, staticId, nickname, comment) {
 
     /* Переиспользуем старую строку кандидата, чтобы не плодить записи. */
     for (var j = 0; j < values.length; j++) {
-      if (sameCandidate_(values[j][0], values[j][1], staticId, nickname)) {
+      if (sameCandidate_(values[j][0], staticId)) {
         sheet.getRange(j + 2, 1, 1, PERM_HEADERS.length).setValues([[
           safeCell(staticId),
           safeCell(nickname),
@@ -515,7 +515,7 @@ function revokePermission_(ss, staticId, nickname) {
   var changed = false;
   var values = sheet.getRange(2, 1, sheet.getLastRow() - 1, 3).getValues();
   for (var i = 0; i < values.length; i++) {
-    if (sameCandidate_(values[i][0], values[i][1], staticId, nickname) &&
+    if (sameCandidate_(values[i][0], staticId) &&
         String(values[i][2] || '').trim() === STATUS_ALLOWED) {
       sheet.getRange(i + 2, 3).setValue(STATUS_REVOKED);
       changed = true;

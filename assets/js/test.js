@@ -746,10 +746,22 @@
         });
     }).then(data => {
       if (!data || data.ok !== true || typeof data.allowed !== 'boolean') {
-        throw new Error((data && (data.message || data.error)) || 'bad response');
+        const err = new Error((data && (data.message || data.error)) || 'bad response');
+        /* Старая версия Apps Script не знает про action=check. */
+        if (data && (data.error === 'empty or invalid payload id' || data.service === 'dshr-test-results')) {
+          err.code = 'not_configured';
+        }
+        throw err;
       }
       return data;
     });
+  }
+
+  function checkFailHtml(err) {
+    if (err && err.code === 'not_configured') {
+      return '<strong>Проверка попыток не настроена.</strong> Пройти тест сейчас нельзя: командиру нужно развернуть новую версию Apps Script.';
+    }
+    return '<strong>Не удалось проверить попытки.</strong> Проверьте подключение к интернету и попробуйте снова. Начать тест без проверки нельзя.';
   }
 
   function blockedHtml(data) {
@@ -886,12 +898,9 @@
         }
         setBusy(btn, false);
         setAttemptNotice(blockedHtml(data), 'warn');
-      }).catch(() => {
-        /* Сервер недоступен или ещё не обновлён: не блокируем старт,
-           окончательную проверку выполнит doPost при отправке. */
+      }).catch(err => {
         setBusy(btn, false);
-        toast('Не удалось проверить попытки — сервер проверит при отправке');
-        startTest({ nickname: nickname, staticId: staticId, unit: unit });
+        setAttemptNotice(checkFailHtml(err), 'bad');
       });
     });
 
@@ -904,10 +913,10 @@
           setBusy(btn, false);
           setAttemptNotice(blockedHtml(data), 'warn');
           toast('Тест уже пройден');
-        }).catch(() => {
+        }).catch(err => {
           setBusy(btn, false);
-          toast('Не удалось проверить попытки — сервер проверит при отправке');
-          resumeTest(draft);
+          setAttemptNotice(checkFailHtml(err), 'bad');
+          toast('Проверка не пройдена');
         });
       });
       document.getElementById('testDiscard').addEventListener('click', () => {
