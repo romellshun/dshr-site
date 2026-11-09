@@ -1007,6 +1007,105 @@ html[data-theme="light"] .ico-moon { display: block; }
   .topbar-actions .icon-btn:last-child { display: none; }
 }
 
+/* ---------- «Помощь»: компактная шпаргалка ---------- */
+.help-page {
+  margin: -34px calc(-1 * clamp(16px, 4vw, 56px)) -90px;
+  padding: clamp(28px, 4.2vw, 56px) clamp(20px, 4.6vw, 64px) clamp(56px, 7vw, 100px);
+  background: #050505;
+  color: #fff;
+  min-height: calc(100vh - var(--topbar-h));
+}
+.help-title {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.05;
+}
+.help-sub {
+  margin: 10px 0 0;
+  color: #f0a63c;
+  font-size: clamp(.72rem, .95vw, .84rem);
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+.help-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(22px, 2.8vw, 44px);
+  margin-top: clamp(30px, 4vw, 58px);
+  align-items: start;
+}
+.help-col-title {
+  margin: 0 0 22px;
+  padding: 0;
+  border: 0;
+  min-height: 2.4em;
+  color: #fff;
+  font-size: clamp(1.02rem, 1.35vw, 1.2rem);
+  font-weight: 800;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+}
+.help-item {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  margin-bottom: 18px;
+}
+.help-item:last-child { margin-bottom: 0; }
+.help-key {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 2px solid #e5890a;
+  border-radius: 5px;
+  background: rgba(255, 255, 255, .02);
+  color: #f2a33a;
+  font-size: .78rem;
+  font-weight: 800;
+  letter-spacing: .01em;
+  flex: none;
+}
+.help-rule {
+  margin: 1px 0 5px;
+  color: #fff;
+  font-size: .82rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+.help-pun {
+  margin: 0;
+  color: #f0a63c;
+  font-size: .76rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+.help-pun > span { color: #9a9a9a; font-weight: 600; }
+.help-note {
+  margin: 5px 0 0;
+  color: #9a9a9a;
+  font-size: .7rem;
+  line-height: 1.45;
+}
+.help-note b { color: #f0a63c; font-weight: 700; }
+
+@media (max-width: 1100px) {
+  .help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 820px) {
+  .help-page { margin-top: -24px; }
+}
+@media (max-width: 620px) {
+  .help-grid { grid-template-columns: 1fr; }
+  .help-page { margin-bottom: -90px; }
+}
+
 /* ---------- Печать ---------- */
 @media print {
   .topbar, .sidebar, .site-footer, .to-top, .toast, .progress, .overlay,
@@ -1025,6 +1124,11 @@ html[data-theme="light"] .ico-moon { display: block; }
   pre { background: #f4f4f4; color: #000; border-color: #ccc; }
   a { color: #000; text-decoration: underline; }
   .chip, .badge, .code { border: 1px solid #bbb; background: #fff; color: #000; }
+  .help-page { background: #fff; color: #000; margin: 0; padding: 0; min-height: 0; }
+  .help-title, .help-col-title, .help-rule { color: #000; }
+  .help-sub, .help-pun, .help-note { color: #333; }
+  .help-key { border-color: #999; background: #fff; color: #000; }
+  .help-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 /* ---------- Анимации ---------- */
