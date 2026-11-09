@@ -7,7 +7,7 @@
 <meta name="description" content="Учебные материалы подразделения: аттестация, разминирование СВУ, первая помощь, штурм, переговоры, специальные сигналы, правила ограблений и выкупа заложников, запреты и наказания для сотрудников, коды связи.">
 <meta name="theme-color" content="#0a0e13">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0e13'/%3E%3Cpath d='M16 5l9 4v7c0 6-4 9-9 11-5-2-9-5-9-11V9z' fill='none' stroke='%23f0b429' stroke-width='2'/%3E%3Cpath d='M16 12v9M11.5 16.5h9' stroke='%23f0b429' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/styles.css?v=20261109b">
+<link rel="stylesheet" href="assets/css/styles.css?v=20261109c">
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -377,12 +377,34 @@
         <div class="bar"><span id="attestBar"></span></div>
       </div>
 
+      <div class="test-cta">
+        <div>
+          <span class="eyebrow">Дистанционная проверка</span>
+          <h3>Тест аттестации</h3>
+          <p>30 случайных вопросов по пяти темам. Время — 45 минут, проходной балл — 24 из 30 (80%). Результат отправляется командиру.</p>
+        </div>
+        <a class="btn btn-primary" href="#/test">Пройти тест</a>
+      </div>
+
       <h2>Что повторить</h2>
       <div class="quick-grid">
         <a class="quick-card" href="#/svu"><span class="quick-num">01</span><h3>СВУ</h3><p>Типы устройств и порядок обезвреживания.</p></a>
         <a class="quick-card" href="#/first-aid"><span class="quick-num">02</span><h3>Первая помощь</h3><p>Алгоритм и состояния пострадавшего.</p></a>
         <a class="quick-card" href="#/negotiations"><span class="quick-num">03</span><h3>Переговоры</h3><p>Цели, действия и запреты.</p></a>
         <a class="quick-card" href="#/assault"><span class="quick-num">04</span><h3>Штурм</h3><p>Группы, термины и тактики.</p></a>
+      </div>
+    </section>
+
+    <!-- ==================== ТЕСТ АТТЕСТАЦИИ ==================== -->
+    <section class="page test-page" data-route="test" id="page-test">
+      <div class="page-head">
+        <span class="eyebrow">Дистанционная аттестация</span>
+        <h1>Тест аттестации</h1>
+        <p class="lead">30 случайных вопросов по пяти темам: СВУ, первая помощь, переговоры, штурм и запреты главы 4. Время — 45 минут, проходной балл — 24 из 30 (80%). Результат отправляется командиру.</p>
+      </div>
+
+      <div id="testApp" class="test-app">
+        <noscript>Для прохождения теста включите JavaScript в браузере.</noscript>
       </div>
     </section>
 
@@ -1712,6 +1734,7 @@
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script src="assets/js/app.js?v=20261109b"></script>
+<script src="assets/js/test.js?v=20261109c"></script>
+<script src="assets/js/app.js?v=20261109c"></script>
 </body>
 </html>
