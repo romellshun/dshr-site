@@ -14,7 +14,8 @@
     'first-aid': 'Первая помощь',
     assault: 'Штурм',
     negotiations: 'Переговоры',
-    signals: 'Специальные сигналы'
+    signals: 'Специальные сигналы',
+    robbery: 'Ограбления и выкуп'
   };
 
   const pages = $$('.page');
@@ -107,6 +108,7 @@
     sidebar.classList.contains('open') ? closeSidebar() : openSidebar();
   });
   overlay.addEventListener('click', closeSidebar);
+  $$('.sidebar a').forEach(a => a.addEventListener('click', closeSidebar));
 
   /* ---------------- Печать ---------------- */
   $('#printBtn').addEventListener('click', () => window.print());
