@@ -1191,6 +1191,28 @@ html[data-theme="light"] .ico-moon { display: block; }
 }
 .test-field input::placeholder { color: var(--muted); opacity: .7; }
 .test-form-error { min-height: 18px; margin: 0; color: var(--danger); font-size: .8rem; }
+.test-attempt {
+  display: grid;
+  gap: 4px;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface-2);
+  font-size: .82rem;
+  line-height: 1.45;
+}
+.test-attempt[hidden] { display: none; }
+.test-attempt span { color: var(--muted); }
+.test-attempt strong { color: var(--warn); }
+.test-attempt-warn {
+  border-color: color-mix(in srgb, var(--warn) 45%, var(--border));
+  background: color-mix(in srgb, var(--warn) 8%, var(--surface-2));
+}
+.test-attempt-bad {
+  border-color: color-mix(in srgb, var(--danger) 45%, var(--border));
+  background: color-mix(in srgb, var(--danger) 8%, var(--surface-2));
+}
+.test-attempt-bad strong { color: var(--danger); }
 .test-start-btn { width: 100%; justify-content: center; }
 
 .test-resume {

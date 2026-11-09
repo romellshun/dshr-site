@@ -714,6 +714,84 @@
     return Math.max(0, Math.min(saved, byClock));
   }
 
+  /* ---------------- Проверка попытки ---------------- */
+  function checkAttempt(candidate) {
+    if (!CONFIG.endpoint) return Promise.resolve({ ok: true, allowed: true });
+
+    const body = {
+      action: 'check',
+      staticId: candidate.staticId,
+      nickname: candidate.nickname,
+      checkId: 'check-' + Date.now()
+    };
+
+    return fetch(CONFIG.endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(body),
+      redirect: 'follow'
+    }).then(res => {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).catch(() => {
+      /* Резервный канал, если POST заблокирован браузером. */
+      const url = CONFIG.endpoint +
+        '?action=check&staticId=' + encodeURIComponent(candidate.staticId) +
+        '&nickname=' + encodeURIComponent(candidate.nickname) +
+        '&t=' + Date.now();
+      return fetch(url, { method: 'GET', redirect: 'follow', cache: 'no-store' })
+        .then(res => {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        });
+    }).then(data => {
+      if (!data || data.ok !== true || typeof data.allowed !== 'boolean') {
+        throw new Error((data && (data.message || data.error)) || 'bad response');
+      }
+      return data;
+    });
+  }
+
+  function blockedHtml(data) {
+    let html = '<strong>Тест уже пройден.</strong> Повторная попытка возможна только с разрешения командира.';
+    const prev = data && data.previous;
+    if (prev && prev.total) {
+      const when = prev.date ? new Date(prev.date) : null;
+      const whenStr = when && !isNaN(when.getTime()) ? when.toLocaleString('ru-RU') : '';
+      html += '<span>Предыдущая попытка: ' + prev.score + ' из ' + prev.total +
+        (prev.passed ? ' (сдано)' : ' (не сдано)') +
+        (whenStr ? ' · ' + whenStr : '') + '.</span>';
+    }
+    return html;
+  }
+
+  function setAttemptNotice(html, kind) {
+    const box = document.getElementById('testAttempt');
+    if (!box) return;
+    if (!html) {
+      box.hidden = true;
+      box.className = 'test-attempt';
+      box.innerHTML = '';
+      return;
+    }
+    box.hidden = false;
+    box.className = 'test-attempt test-attempt-' + (kind || 'warn');
+    box.innerHTML = html;
+    if (box.scrollIntoView) box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function setBusy(btn, busy, label) {
+    if (!btn) return;
+    if (busy) {
+      btn.dataset.idleLabel = btn.textContent;
+      btn.textContent = label || 'Подождите…';
+      btn.disabled = true;
+    } else {
+      btn.textContent = btn.dataset.idleLabel || btn.textContent;
+      btn.disabled = false;
+    }
+  }
+
   /* ---------------- Стартовый экран ---------------- */
   function renderStart(draft) {
     stopTimer();
@@ -742,6 +820,7 @@
           '<div class="test-intro-main">' +
             '<h2 class="test-block-title">Перед началом</h2>' +
             '<p>Тест состоит из 30 случайных вопросов: по 6 из каждой темы. На выполнение даётся 45 минут. Проходной балл — 24 из 30 (80%).</p>' +
+            '<div class="callout callout-info"><div><strong>Одна попытка.</strong> Повторное прохождение открывается только командиром.</div></div>' +
             (CONFIG.endpoint ? '' : '<div class="callout callout-warn"><div><strong>Отправка ещё не подключена.</strong> В конце теста результат нужно будет скопировать и передать командиру вручную.</div></div>') +
             '<div class="test-rules">' +
               '<div class="test-rule"><span class="test-rule-num">30</span><span>вопросов</span></div>' +
@@ -761,6 +840,7 @@
           '<div class="test-intro-side">' +
             '<h2 class="test-block-title">Данные кандидата</h2>' +
             '<form class="test-form" id="testForm" novalidate>' +
+              '<div class="test-attempt" id="testAttempt" role="status" hidden></div>' +
               '<label class="test-field">' +
                 '<span>Никнейм</span>' +
                 '<input type="text" id="testNick" maxlength="60" autocomplete="nickname" placeholder="Например, Romerik_Banhammer" required>' +
@@ -789,17 +869,47 @@
       const staticId = document.getElementById('testStatic').value.trim();
       const unit = document.getElementById('testUnit').value.trim();
       const err = document.getElementById('testFormError');
+      const btn = form.querySelector('.test-start-btn');
 
       if (nickname.length < 2) { err.textContent = 'Укажите никнейм (минимум 2 символа).'; return; }
       if (staticId.length < 1) { err.textContent = 'Укажите статик-ID.'; return; }
       if (unit.length < 2) { err.textContent = 'Укажите подразделение.'; return; }
 
       err.textContent = '';
-      startTest({ nickname: nickname, staticId: staticId, unit: unit });
+      setAttemptNotice('');
+      setBusy(btn, true, 'Проверяем…');
+
+      checkAttempt({ nickname: nickname, staticId: staticId }).then(data => {
+        if (data.allowed) {
+          startTest({ nickname: nickname, staticId: staticId, unit: unit });
+          return;
+        }
+        setBusy(btn, false);
+        setAttemptNotice(blockedHtml(data), 'warn');
+      }).catch(() => {
+        /* Сервер недоступен или ещё не обновлён: не блокируем старт,
+           окончательную проверку выполнит doPost при отправке. */
+        setBusy(btn, false);
+        toast('Не удалось проверить попытки — сервер проверит при отправке');
+        startTest({ nickname: nickname, staticId: staticId, unit: unit });
+      });
     });
 
     if (draft) {
-      document.getElementById('testResume').addEventListener('click', () => resumeTest(draft));
+      document.getElementById('testResume').addEventListener('click', () => {
+        const btn = document.getElementById('testResume');
+        setBusy(btn, true, 'Проверяем…');
+        checkAttempt(draft.candidate).then(data => {
+          if (data.allowed) { resumeTest(draft); return; }
+          setBusy(btn, false);
+          setAttemptNotice(blockedHtml(data), 'warn');
+          toast('Тест уже пройден');
+        }).catch(() => {
+          setBusy(btn, false);
+          toast('Не удалось проверить попытки — сервер проверит при отправке');
+          resumeTest(draft);
+        });
+      });
       document.getElementById('testDiscard').addEventListener('click', () => {
         clearDraft();
         renderStart(null);
@@ -1149,9 +1259,9 @@
           '</div>' +
           '<div class="test-result-card test-result-actions">' +
             '<h2 class="test-block-title">Действия</h2>' +
-            '<p class="muted small">Скопируйте результат, если нужно передать его вручную.</p>' +
+            '<p class="muted small">Скопируйте результат, если нужно передать его вручную. Повторная попытка — только с разрешения командира.</p>' +
             '<button type="button" class="btn" id="testCopy">Скопировать результат</button>' +
-            '<button type="button" class="btn" id="testAgain">Пройти заново</button>' +
+            '<button type="button" class="btn" id="testAgain">К форме теста</button>' +
             '<a class="btn btn-ghost" href="#/attestation">Вернуться к аттестации</a>' +
           '</div>' +
         '</div>' +
@@ -1221,6 +1331,16 @@
       redirect: 'follow'
     }).then(res => {
       if (!res.ok) throw new Error('HTTP ' + res.status);
+      return res.json();
+    }).then(data => {
+      if (data && data.ok === false) {
+        if (data.error === 'already_attempted') {
+          setDelivery('<span class="test-send test-send-bad">Результат не принят: этот кандидат уже проходил тест. Повторная попытка — только с разрешения командира.</span>');
+        } else {
+          setDelivery('<span class="test-send test-send-bad">Результат не принят. Скопируйте его и передайте командиру.</span>');
+        }
+        return;
+      }
       setDelivery('<span class="test-send test-send-ok">Результат отправлен командиру.</span>');
     }).catch(() => {
       sendViaForm(result);
