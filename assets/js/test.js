@@ -705,6 +705,15 @@
     try { localStorage.removeItem(STORE); } catch (e) { /* ignore */ }
   }
 
+  /* Оставшееся время считается по моменту старта: закрытие вкладки не ставит таймер на паузу. */
+  function remainingForDraft(draft) {
+    const total = CONFIG.durationMin * 60;
+    const elapsed = draft.startedAt ? Math.floor((Date.now() - draft.startedAt) / 1000) : 0;
+    const byClock = total - Math.max(0, elapsed);
+    const saved = typeof draft.remaining === 'number' ? draft.remaining : byClock;
+    return Math.max(0, Math.min(saved, byClock));
+  }
+
   /* ---------------- Стартовый экран ---------------- */
   function renderStart(draft) {
     stopTimer();
@@ -718,7 +727,7 @@
           '<div>' +
             '<strong>Найден незавершённый тест</strong>' +
             '<p>Кандидат: ' + esc(draft.candidate.nickname) + ' · ' + esc(draft.candidate.staticId) +
-            '. Отвечено ' + answered + ' из ' + draft.items.length + '. Осталось ' + fmtTime(draft.remaining) + '.</p>' +
+            '. Отвечено ' + answered + ' из ' + draft.items.length + '. Осталось ' + fmtTime(remainingForDraft(draft)) + '.</p>' +
           '</div>' +
           '<div class="test-resume-actions">' +
             '<button type="button" class="btn btn-primary" id="testResume">Продолжить</button>' +
@@ -733,6 +742,7 @@
           '<div class="test-intro-main">' +
             '<h2 class="test-block-title">Перед началом</h2>' +
             '<p>Тест состоит из 30 случайных вопросов: по 6 из каждой темы. На выполнение даётся 45 минут. Проходной балл — 24 из 30 (80%).</p>' +
+            (CONFIG.endpoint ? '' : '<div class="callout callout-warn"><div><strong>Отправка ещё не подключена.</strong> В конце теста результат нужно будет скопировать и передать командиру вручную.</div></div>') +
             '<div class="test-rules">' +
               '<div class="test-rule"><span class="test-rule-num">30</span><span>вопросов</span></div>' +
               '<div class="test-rule"><span class="test-rule-num">45</span><span>минут</span></div>' +
@@ -862,7 +872,7 @@
       items: items,
       current: Math.min(Math.max(0, draft.current || 0), items.length - 1),
       startedAt: draft.startedAt || Date.now(),
-      remaining: Math.max(0, draft.remaining || 0),
+      remaining: remainingForDraft(draft),
       resultId: draft.resultId || makeId(),
       submitted: false,
       result: null
