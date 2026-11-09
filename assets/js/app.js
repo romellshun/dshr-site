@@ -16,7 +16,8 @@
     negotiations: 'Переговоры',
     signals: 'Специальные сигналы',
     robbery: 'Ограбления и выкуп',
-    help: 'Помощь'
+    help: 'Помощь',
+    test: 'Тест аттестации'
   };
 
   const pages = $$('.page');
