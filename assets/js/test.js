@@ -10,6 +10,7 @@
     endpoint: 'https://script.google.com/macros/s/AKfycbz55obag8nH0dUV9ECRXznedL7wJZrMUrRSC_uptifjql-HUL2pOysNqjfwiOlELlg/exec',
     total: 30,
     durationMin: 45,
+    questionSec: 90,
     passScore: 24,
     passPercent: 80,
     perTopic: 6
@@ -696,6 +697,8 @@
         current: state.current,
         startedAt: state.startedAt,
         remaining: state.remaining,
+        questionStartedAt: state.questionStartedAt,
+        questionLimit: state.questionLimit,
         resultId: state.resultId
       }));
     } catch (e) { /* приватный режим — просто не сохраняем */ }
@@ -804,9 +807,22 @@
     }
   }
 
+  function setTestingMode(on) {
+    document.body.classList.toggle('is-testing', !!on);
+    if (on) {
+      const overlay = document.getElementById('overlay');
+      if (overlay) overlay.hidden = true;
+      const sidebar = document.getElementById('sidebar');
+      if (sidebar) sidebar.classList.remove('open');
+      const menuBtn = document.getElementById('menuBtn');
+      if (menuBtn) menuBtn.setAttribute('aria-expanded', 'false');
+    }
+  }
+
   /* ---------------- Стартовый экран ---------------- */
   function renderStart(draft) {
     stopTimer();
+    setTestingMode(false);
     state = null;
 
     let resume = '';
@@ -831,14 +847,15 @@
         '<div class="test-intro">' +
           '<div class="test-intro-main">' +
             '<h2 class="test-block-title">Перед началом</h2>' +
-            '<p>Тест состоит из 30 случайных вопросов: по 6 из каждой темы. На выполнение даётся 45 минут. Проходной балл — 24 из 30 (80%).</p>' +
+            '<p>Тест состоит из 30 случайных вопросов: по 6 из каждой темы. На каждый вопрос даётся 1,5 минуты, на весь тест — 45 минут. Проходной балл — 24 из 30 (80%).</p>' +
             '<div class="callout callout-info"><div><strong>Одна попытка.</strong> Повторное прохождение открывается только командиром.</div></div>' +
+            '<div class="callout callout-warn"><div><strong>Режим теста.</strong> Ответ нельзя изменить, к пройденному вопросу нельзя вернуться. Переключение вкладки или окна и переходы по сайту завершают тест.</div></div>' +
             (CONFIG.endpoint ? '' : '<div class="callout callout-warn"><div><strong>Отправка ещё не подключена.</strong> В конце теста результат нужно будет скопировать и передать командиру вручную.</div></div>') +
             '<div class="test-rules">' +
               '<div class="test-rule"><span class="test-rule-num">30</span><span>вопросов</span></div>' +
-              '<div class="test-rule"><span class="test-rule-num">45</span><span>минут</span></div>' +
+              '<div class="test-rule"><span class="test-rule-num">1,5</span><span>минуты на ответ</span></div>' +
+              '<div class="test-rule"><span class="test-rule-num">45</span><span>минут всего</span></div>' +
               '<div class="test-rule"><span class="test-rule-num">24</span><span>проходной балл</span></div>' +
-              '<div class="test-rule"><span class="test-rule-num">5</span><span>тем</span></div>' +
             '</div>' +
             '<div class="test-topics">' +
               '<span class="badge">СВУ</span>' +
@@ -847,7 +864,7 @@
               '<span class="badge">Штурм</span>' +
               '<span class="badge">Запреты главы 4</span>' +
             '</div>' +
-            '<p class="muted small">Вопросы составлены по материалам сайта. Во время теста нельзя закрывать вкладку: оставшееся время сохраняется, но таймер продолжает идти.</p>' +
+            '<p class="muted small">Вопросы составлены по материалам сайта. Черновик сохраняется, но таймер не останавливается. Возврат к вопросам и изменение ответов запрещены.</p>' +
           '</div>' +
           '<div class="test-intro-side">' +
             '<h2 class="test-block-title">Данные кандидата</h2>' +
@@ -963,16 +980,23 @@
       });
     });
 
+    const now = Date.now();
     state = {
       candidate: candidate,
       items: shuffle(picked),
       current: 0,
-      startedAt: Date.now(),
+      startedAt: now,
       remaining: CONFIG.durationMin * 60,
+      questionStartedAt: now,
+      questionLimit: CONFIG.questionSec,
+      questionRemaining: CONFIG.questionSec,
       resultId: makeId(),
       submitted: false,
+      confirming: false,
+      awayHandled: false,
       result: null
     };
+    setTestingMode(true);
     saveDraft();
     renderTest();
     startTimer();
@@ -986,19 +1010,33 @@
       toast('Черновик повреждён, начните тест заново');
       return;
     }
+
+    const now = Date.now();
+    const remaining = remainingForDraft(draft);
+    const questionStartedAt = draft.questionStartedAt || now;
+    const questionLimit = Math.min(Number(draft.questionLimit) || CONFIG.questionSec, remaining);
+    const questionElapsed = Math.max(0, Math.floor((now - questionStartedAt) / 1000));
+
     state = {
       candidate: draft.candidate,
       items: items,
       current: Math.min(Math.max(0, draft.current || 0), items.length - 1),
-      startedAt: draft.startedAt || Date.now(),
-      remaining: remainingForDraft(draft),
+      startedAt: draft.startedAt || now,
+      remaining: remaining,
+      questionStartedAt: questionStartedAt,
+      questionLimit: questionLimit,
+      questionRemaining: Math.max(0, questionLimit - questionElapsed),
       resultId: draft.resultId || makeId(),
       submitted: false,
+      confirming: false,
+      awayHandled: false,
       result: null
     };
+    setTestingMode(true);
     renderTest();
     startTimer();
-    if (state.remaining <= 0) submitTest(true);
+    if (state.remaining <= 0) { submitTest(true, 'time'); return; }
+    if (state.questionRemaining <= 0) { handleQuestionTimeout(); }
   }
 
   /* ---------------- Таймер ---------------- */
@@ -1007,14 +1045,29 @@
     updateTimerUI();
     timerId = setInterval(() => {
       if (!state || state.submitted) { stopTimer(); return; }
-      state.remaining -= 1;
+
+      const elapsedTotal = Math.floor((Date.now() - state.startedAt) / 1000);
+      state.remaining = Math.max(0, CONFIG.durationMin * 60 - elapsedTotal);
+
+      const elapsedQuestion = Math.floor((Date.now() - state.questionStartedAt) / 1000);
+      state.questionRemaining = Math.max(0, state.questionLimit - elapsedQuestion);
+
       if (state.remaining % 5 === 0) saveDraft();
       updateTimerUI();
-      if (state.remaining <= 0) {
-        stopTimer();
-        submitTest(true);
-      }
+
+      if (state.remaining <= 0) { submitTest(true, 'time'); return; }
+      if (state.questionRemaining <= 0) { handleQuestionTimeout(); }
     }, 1000);
+  }
+
+  function handleQuestionTimeout() {
+    if (!state || state.submitted) return;
+    if (state.current >= state.items.length - 1) {
+      submitTest(true, 'question-timeout');
+      return;
+    }
+    toast('Время на вопрос истекло');
+    goTo(state.current + 1);
   }
 
   function stopTimer() {
@@ -1022,11 +1075,21 @@
   }
 
   function updateTimerUI() {
+    if (!state || state.submitted) return;
+
     const el = document.getElementById('testTimer');
-    if (!el || !state || state.submitted) return;
-    el.textContent = fmtTime(state.remaining);
-    el.classList.toggle('is-low', state.remaining <= 300);
-    el.classList.toggle('is-critical', state.remaining <= 60);
+    if (el) {
+      el.innerHTML = fmtTime(state.remaining) + '<small>на тест</small>';
+      el.classList.toggle('is-low', state.remaining <= 300);
+      el.classList.toggle('is-critical', state.remaining <= 60);
+    }
+
+    const qEl = document.getElementById('testQuestionTimer');
+    if (qEl) {
+      qEl.innerHTML = fmtTime(state.questionRemaining) + '<small>на вопрос</small>';
+      qEl.classList.toggle('is-low', state.questionRemaining <= 30);
+      qEl.classList.toggle('is-critical', state.questionRemaining <= 10);
+    }
   }
 
   /* ---------------- Экран теста ---------------- */
@@ -1040,7 +1103,7 @@
             '<strong>' + esc(c.nickname) + '</strong>' +
             '<span class="test-hud-sub">' + esc(c.unit) + ' · ' + esc(c.staticId) + '</span>' +
           '</div>' +
-          '<div class="test-hud-timer" id="testTimer">' + fmtTime(state.remaining) + '<small>осталось</small></div>' +
+          '<div class="test-hud-timer" id="testTimer">' + fmtTime(state.remaining) + '<small>на тест</small></div>' +
           '<div class="test-hud-progress">' +
             '<span><strong id="testAnswered">0</strong> / ' + state.items.length + '</span>' +
             '<small>отвечено</small>' +
@@ -1050,7 +1113,6 @@
           '<div class="test-main">' +
             '<div id="testQuestion"></div>' +
             '<div class="test-controls">' +
-              '<button type="button" class="btn" id="testPrev">← Назад</button>' +
               '<button type="button" class="btn" id="testNext">Далее →</button>' +
               '<button type="button" class="btn btn-primary" id="testFinish">Завершить тест</button>' +
             '</div>' +
@@ -1063,29 +1125,30 @@
               '<span><i class="test-dot current"></i> текущий</span>' +
               '<span><i class="test-dot"></i> без ответа</span>' +
             '</div>' +
-            '<p class="test-side-note">Можно отвечать в любом порядке. Неотвеченные вопросы при завершении считаются ошибками.</p>' +
+            '<p class="test-side-note">Движение только вперёд: вернуться к пройденному вопросу нельзя. Неотвеченные вопросы при завершении считаются ошибками.</p>' +
           '</aside>' +
         '</div>' +
       '</div>';
 
-    document.getElementById('testPrev').addEventListener('click', () => goTo(state.current - 1));
     document.getElementById('testNext').addEventListener('click', () => goTo(state.current + 1));
     document.getElementById('testFinish').addEventListener('click', finishWithConfirm);
 
     document.getElementById('testQuestion').addEventListener('click', e => {
       const btn = e.target.closest('.test-opt');
-      if (!btn) return;
-      const idx = Number(btn.dataset.opt);
-      state.items[state.current].chosen = idx;
+      if (!btn || btn.disabled) return;
+      const item = state.items[state.current];
+      if (item.chosen !== null) return;
+      item.chosen = Number(btn.dataset.opt);
       saveDraft();
       renderQuestion();
       renderNav();
       updateAnswered();
+      toast('Ответ зафиксирован');
     });
 
     document.getElementById('testNav').addEventListener('click', e => {
       const btn = e.target.closest('.test-nav-btn');
-      if (!btn) return;
+      if (!btn || btn.disabled) return;
       goTo(Number(btn.dataset.go));
     });
 
@@ -1099,10 +1162,12 @@
     const box = document.getElementById('testQuestion');
     if (!box || !state) return;
     const item = state.items[state.current];
+    const locked = item.chosen !== null;
 
     const options = item.options.map((text, i) => {
       const on = item.chosen === i;
-      return '<button type="button" class="test-opt' + (on ? ' chosen' : '') + '" data-opt="' + i + '" aria-pressed="' + on + '">' +
+      return '<button type="button" class="test-opt' + (on ? ' chosen' : '') + '" data-opt="' + i + '" aria-pressed="' + on + '"' +
+        (locked ? ' disabled' : '') + '>' +
         '<span class="test-opt-key">' + String.fromCharCode(65 + i) + '</span>' +
         '<span class="test-opt-text">' + esc(text) + '</span>' +
         '<span class="test-opt-mark" aria-hidden="true">' + (on ? '✓' : '') + '</span>' +
@@ -1113,15 +1178,17 @@
       '<article class="test-question">' +
         '<div class="test-q-top">' +
           '<span class="badge badge-accent">' + esc(TOPICS[item.topic].name) + '</span>' +
-          '<span class="test-q-count">Вопрос ' + (state.current + 1) + ' из ' + state.items.length + '</span>' +
+          '<span class="test-q-meta">' +
+            '<span class="test-q-count">Вопрос ' + (state.current + 1) + ' из ' + state.items.length + '</span>' +
+            '<span class="test-q-timer" id="testQuestionTimer">' + fmtTime(state.questionRemaining) + '<small>на вопрос</small></span>' +
+          '</span>' +
         '</div>' +
         '<h2 class="test-q-text">' + esc(item.q) + '</h2>' +
-        '<div class="test-options">' + options + '</div>' +
+        '<div class="test-options' + (locked ? ' is-locked' : '') + '">' + options + '</div>' +
+        (locked ? '<p class="test-answer-lock">Ответ зафиксирован. Изменить его нельзя.</p>' : '') +
       '</article>';
 
-    const prev = document.getElementById('testPrev');
     const next = document.getElementById('testNext');
-    if (prev) prev.disabled = state.current === 0;
     if (next) next.disabled = state.current === state.items.length - 1;
   }
 
@@ -1132,8 +1199,9 @@
       let cls = 'test-nav-btn';
       if (i === state.current) cls += ' current';
       else if (it.chosen !== null) cls += ' answered';
+      if (i !== state.current) cls += ' locked';
       return '<button type="button" class="' + cls + '" data-go="' + i + '" aria-label="Вопрос ' + (i + 1) + '"' +
-        (i === state.current ? ' aria-current="true"' : '') + '>' + (i + 1) + '</button>';
+        (i === state.current ? ' aria-current="true"' : ' disabled') + '>' + (i + 1) + '</button>';
     }).join('');
   }
 
@@ -1143,8 +1211,11 @@
   }
 
   function goTo(index) {
-    if (!state || index < 0 || index >= state.items.length) return;
+    if (!state || index !== state.current + 1 || index >= state.items.length) return;
     state.current = index;
+    state.questionStartedAt = Date.now();
+    state.questionLimit = Math.min(CONFIG.questionSec, state.remaining);
+    state.questionRemaining = state.questionLimit;
     saveDraft();
     renderQuestion();
     renderNav();
@@ -1158,15 +1229,21 @@
     const msg = left
       ? 'Без ответа осталось вопросов: ' + left + '. Они будут засчитаны как ошибки. Завершить тест?'
       : 'Все вопросы отвечены. Завершить тест и отправить результат?';
-    if (window.confirm(msg)) submitTest(false);
+
+    /* Пока открыт системный диалог, окно может потерять фокус — не считаем это уходом со страницы. */
+    state.confirming = true;
+    let ok = false;
+    try { ok = window.confirm(msg); } finally { state.confirming = false; }
+    if (ok) submitTest(false, 'manual');
   }
 
   /* ---------------- Завершение и результат ---------------- */
-  function submitTest(auto) {
+  function submitTest(auto, reason) {
     if (!state || state.submitted) return;
     state.submitted = true;
     stopTimer();
 
+    const termination = reason || (auto ? 'time' : 'manual');
     const finishedAt = Date.now();
     const elapsed = Math.min(CONFIG.durationMin * 60, Math.round((finishedAt - state.startedAt) / 1000));
     const answers = state.items.map(it => ({
@@ -1205,22 +1282,32 @@
       finishedAt: new Date(finishedAt).toISOString(),
       durationSec: elapsed,
       autoSubmitted: !!auto,
+      termination: termination,
       topics: topics,
       answers: answers
     };
 
     state.result = result;
     clearDraft();
-    renderResult(result, auto);
+    renderResult(result, auto, termination);
     sendResult(result);
   }
 
-  function renderResult(result, auto) {
+  function renderResult(result, auto, reason) {
+    setTestingMode(false);
     const wrong = result.answers.filter(a => !a.isCorrect);
     const when = new Date(result.finishedAt);
     const dateStr = when.toLocaleString('ru-RU');
     const mins = Math.floor(result.durationSec / 60);
     const secs = result.durationSec % 60;
+
+    const endNote = reason === 'tab-switch'
+      ? ' · тест завершён из-за переключения вкладки'
+      : reason === 'question-timeout'
+        ? ' · время на последний вопрос истекло'
+        : reason === 'time'
+          ? ' · время теста истекло'
+          : '';
 
     const topicRows = Object.keys(result.topics).map(key => {
       const t = result.topics[key];
@@ -1257,7 +1344,8 @@
           '</div>' +
           '<p class="test-score-line">' + result.percent + '% · проходной балл ' + result.passScore + ' из ' + result.total + '</p>' +
           '<p class="test-candidate">' + esc(result.nickname) + ' · ' + esc(result.staticId) + ' · ' + esc(result.unit) + '</p>' +
-          '<p class="muted small">' + esc(dateStr) + ' · затрачено ' + mins + ' мин ' + secs + ' сек' + (auto ? ' · время истекло' : '') + '</p>' +
+          '<p class="muted small">' + esc(dateStr) + ' · затрачено ' + mins + ' мин ' + secs + ' сек' + endNote + '</p>' +
+          (reason === 'tab-switch' ? '<div class="callout callout-danger test-result-alert"><div><strong>Тест завершён автоматически.</strong> Во время прохождения была переключена вкладка или окно.</div></div>' : '') +
           '<div id="testDelivery" class="test-delivery"></div>' +
         '</div>' +
 
@@ -1299,6 +1387,12 @@
     lines.push('Подразделение: ' + r.unit);
     lines.push('Результат: ' + r.score + ' из ' + r.total + ' (' + r.percent + '%)');
     lines.push('Статус: ' + (r.passed ? 'СДАНО' : 'НЕ СДАНО'));
+    if (r.termination && r.termination !== 'manual') {
+      lines.push('Завершение: ' + (
+        r.termination === 'tab-switch' ? 'переключение вкладки' :
+        r.termination === 'question-timeout' ? 'время на вопрос' : 'время теста'
+      ));
+    }
     lines.push('Дата: ' + new Date(r.finishedAt).toLocaleString('ru-RU'));
     lines.push('ID результата: ' + r.id);
     lines.push('');
@@ -1391,6 +1485,43 @@
 
     setTimeout(() => form.remove(), 2000);
   }
+
+  /* ---------------- Запрет ухода со страницы ---------------- */
+  function handleAway() {
+    if (!state || state.submitted || state.confirming || state.awayHandled) return;
+    state.awayHandled = true;
+    submitTest(true, 'tab-switch');
+  }
+
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) handleAway();
+  });
+  window.addEventListener('blur', handleAway);
+
+  function blockTestNavigation(e) {
+    if (!state || state.submitted) return;
+    const link = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+    if (!link) return;
+    e.preventDefault();
+    e.stopPropagation();
+    toast('Во время теста переходы по сайту запрещены');
+  }
+
+  document.addEventListener('click', blockTestNavigation, true);
+  document.addEventListener('auxclick', blockTestNavigation, true);
+  document.addEventListener('contextmenu', e => {
+    if (state && !state.submitted) {
+      e.preventDefault();
+      toast('Контекстное меню во время теста недоступно');
+    }
+  }, true);
+
+  window.addEventListener('hashchange', () => {
+    if (state && !state.submitted && location.hash !== '#/test') {
+      location.hash = '#/test';
+      toast('Во время теста переходы по сайту запрещены');
+    }
+  });
 
   /* ---------------- Предупреждение о закрытии ---------------- */
   window.addEventListener('beforeunload', e => {

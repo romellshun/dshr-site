@@ -66,7 +66,7 @@ function doGet(e) {
       return json({ ok: false, error: String(err) });
     }
   }
-  return json({ ok: true, service: 'dshr-test-results', version: 2 });
+  return json({ ok: true, service: 'dshr-test-results', version: 3 });
 }
 
 function doPost(e) {
@@ -157,7 +157,7 @@ function doPost(e) {
       Number(data.percent) || 0,
       data.passed ? 'СДАНО' : 'НЕ СДАНО',
       Number(data.durationSec) || 0,
-      data.autoSubmitted ? 'да' : 'нет',
+      terminationLabel_(data),
       data.startedAt || '',
       data.finishedAt || '',
       topicScore(svu),
@@ -529,6 +529,16 @@ function revokePermission_(ss, staticId, nickname) {
 function topicScore(t) {
   if (!t || typeof t.correct === 'undefined') return '';
   return Number(t.correct) + ' / ' + Number(t.total);
+}
+
+/* Как завершился тест: вручную, по времени или из-за ухода со страницы. */
+function terminationLabel_(data) {
+  var reason = data && data.termination ? String(data.termination) : '';
+  if (reason === 'tab-switch') return 'да (вкладка)';
+  if (reason === 'question-timeout') return 'да (вопрос)';
+  if (reason === 'time') return 'да (время)';
+  if (data && data.autoSubmitted) return 'да';
+  return 'нет';
 }
 
 /* Не даём значениям из формы превратиться в формулы Google Таблиц. */
