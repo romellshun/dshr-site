@@ -1,0 +1,1268 @@
+<!doctype html>
+<html lang="ru" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ДШР — Десантная Штурмовая Рота</title>
+<meta name="description" content="Учебные материалы подразделения: аттестация, разминирование СВУ, первая помощь, штурм, переговоры, специальные сигналы и коды связи.">
+<meta name="theme-color" content="#0a0e13">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0e13'/%3E%3Cpath d='M16 5l9 4v7c0 6-4 9-9 11-5-2-9-5-9-11V9z' fill='none' stroke='%23f0b429' stroke-width='2'/%3E%3Cpath d='M16 12v9M11.5 16.5h9' stroke='%23f0b429' stroke-width='2'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<div class="progress" id="progress" aria-hidden="true"></div>
+
+<header class="topbar">
+  <button class="icon-btn only-mobile" id="menuBtn" aria-label="Открыть меню" aria-expanded="false" aria-controls="sidebar">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+
+  <a class="brand" href="#/home">
+    <span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4l9 4v8c0 6-4 9.5-9 12-5-2.5-9-6-9-12V8z"/><path d="M16 12v9M11.5 16.5h9"/></svg>
+    </span>
+    <span class="brand-text"><strong>ДШР</strong><small>Десантная штурмовая рота</small></span>
+  </a>
+
+  <div class="search" role="search">
+    <svg class="search-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+    <input type="search" id="searchInput" placeholder="Поиск по материалам…" autocomplete="off" aria-label="Поиск по материалам">
+    <kbd class="search-kbd">/</kbd>
+    <div class="search-results" id="searchResults" hidden></div>
+  </div>
+
+  <div class="topbar-actions">
+    <button class="icon-btn" id="themeBtn" aria-label="Переключить тему" title="Светлая / тёмная тема">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="ico-moon" d="M21 12.8A8.5 8.5 0 1111.2 3a7 7 0 009.8 9.8z"/><g class="ico-sun"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M19.1 4.9l-1.4 1.4M6.3 17.7l-1.4 1.4"/></g></svg>
+    </button>
+    <button class="icon-btn" id="printBtn" aria-label="Печать" title="Версия для печати">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9V3h12v6"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="7" rx="1"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <nav aria-label="Разделы сайта">
+      <p class="nav-label">Разделы</p>
+      <a href="#/home" data-nav="home">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg>
+        <span>Главная</span>
+      </a>
+      <a href="#/attestation" data-nav="attestation">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6v3H9z"/><path d="M9 5.5H6a1 1 0 00-1 1V20a1 1 0 001 1h12a1 1 0 001-1V6.5a1 1 0 00-1-1h-3"/><path d="M8.5 13l2 2 4.5-4.5"/></svg>
+        <span>Аттестация</span>
+      </a>
+      <a href="#/svu" data-nav="svu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v6c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V7z"/><path d="M12 8v4.5"/><circle cx="12" cy="16" r=".9" fill="currentColor" stroke="none"/></svg>
+        <span>СВУ</span>
+      </a>
+      <a href="#/first-aid" data-nav="first-aid">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="14" rx="2"/><path d="M9 6V4h6v2"/><path d="M12 10v6M9 13h6"/></svg>
+        <span>Первая помощь</span>
+      </a>
+      <a href="#/assault" data-nav="assault">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l3 3v5l4 4v3l-7-3-7 3v-3l4-4V5z"/><path d="M12 14v8"/></svg>
+        <span>Штурм</span>
+      </a>
+      <a href="#/negotiations" data-nav="negotiations">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 01-8 8H4l2.2-2.6A8 8 0 1121 12z"/><path d="M8.5 11h7M8.5 14.5h4"/></svg>
+        <span>Переговоры</span>
+      </a>
+      <a href="#/signals" data-nav="signals">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4.9 4.9a10 10 0 000 14.2M9.2 9.2a5 5 0 000 5.6"/><circle cx="14" cy="12" r="2"/><path d="M17.8 8.2a5 5 0 010 7.6M20.6 5.4a9 9 0 010 13.2"/></svg>
+        <span>Специальные сигналы</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-card">
+      <p class="sidebar-card-title">Быстрый доступ</p>
+      <a href="#/first-aid/fa-algorithm">Алгоритм первой помощи</a>
+      <a href="#/svu/svu-order">Порядок разминирования</a>
+      <a href="#/signals/sig-list">Сигналы тревоги</a>
+      <a href="#/home/home-codes">Коды связи</a>
+    </div>
+
+    <div class="sidebar-footer">
+      <span class="dot"></span> Ролевой проект · учебный материал
+    </div>
+  </aside>
+
+  <main id="main">
+    <div class="page-shift">
+
+    <!-- ==================== ГЛАВНАЯ ==================== -->
+    <section class="page" data-route="home" id="page-home">
+      <div class="hero">
+        <div class="hero-glow" aria-hidden="true"></div>
+        <span class="eyebrow">Информационный центр</span>
+        <h1>Десантная<br><span class="accent">Штурмовая Рота</span></h1>
+        <p class="lead">Учебные и информационные материалы подразделения: аттестация, разминирование СВУ, первая помощь, штурм, переговоры и специальные сигналы.</p>
+        <div class="hero-actions">
+          <a class="btn btn-primary" href="#/attestation">Пройти аттестацию</a>
+          <a class="btn" href="#/first-aid">Первая помощь</a>
+          <a class="btn btn-ghost" href="#/home/home-codes">Коды связи</a>
+        </div>
+        <div class="hero-stats">
+          <div><strong>7</strong><span>разделов</span></div>
+          <div><strong>14</strong><span>спецсигналов</span></div>
+          <div><strong>5</strong><span>этапов теории</span></div>
+          <div><strong>3</strong><span>этапа практики</span></div>
+        </div>
+      </div>
+
+      <div class="quick-grid">
+        <a class="quick-card" href="#/attestation">
+          <span class="quick-num">01</span>
+          <h3>Аттестация</h3>
+          <p>Два этапа проверки рекрута: теория и практика.</p>
+        </a>
+        <a class="quick-card" href="#/svu">
+          <span class="quick-num">02</span>
+          <h3>СВУ</h3>
+          <p>Типы устройств, порядок обезвреживания и отыгровки.</p>
+        </a>
+        <a class="quick-card" href="#/first-aid">
+          <span class="quick-num">03</span>
+          <h3>Первая помощь</h3>
+          <p>Алгоритм, состояния, СЛР, ранения и кровотечения.</p>
+        </a>
+        <a class="quick-card" href="#/assault">
+          <span class="quick-num">04</span>
+          <h3>Штурм</h3>
+          <p>Группы, терминология и тактики зачистки помещений.</p>
+        </a>
+        <a class="quick-card" href="#/negotiations">
+          <span class="quick-num">05</span>
+          <h3>Переговоры</h3>
+          <p>Цели, обязательные действия и запреты переговорщика.</p>
+        </a>
+        <a class="quick-card" href="#/signals">
+          <span class="quick-num">06</span>
+          <h3>Сигналы</h3>
+          <p>Специальные сигналы и нормативы сбора личного состава.</p>
+        </a>
+      </div>
+
+      <h2>Руководство подразделения</h2>
+      <div class="grid-3">
+        <article class="card person">
+          <div class="person-avatar">ДК</div>
+          <div>
+            <h3>Демьян Калашников</h3>
+            <p><span class="badge badge-accent">Командир ДШР</span></p>
+          </div>
+        </article>
+        <article class="card person">
+          <div class="person-avatar">РБ</div>
+          <div>
+            <h3>Ромэрик Банхаммер</h3>
+            <p><span class="badge badge-accent">Заместитель командира ДШР</span></p>
+          </div>
+        </article>
+        <article class="card person">
+          <div class="person-avatar">—</div>
+          <div>
+            <h3>—</h3>
+            <p><span class="badge badge-accent">Заместитель командира</span></p>
+          </div>
+        </article>
+      </div>
+
+      <h2 id="home-codes">Коды связи</h2>
+
+      <div class="wip">
+        <div class="wip-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3a9 9 0 109 9"/>
+            <path d="M12 7v5l3 2"/>
+          </svg>
+        </div>
+        <div class="wip-body">
+          <span class="wip-tag">В разработке</span>
+          <h3>Раздел пересматривается</h3>
+          <p>Система кодов связи обновляется. Актуальные обозначения появятся здесь после утверждения.</p>
+        </div>
+      </div>
+
+      <template id="home-codes-archive">
+      <p class="section-intro">Единая система докладов в рацию. Код строится по схеме <code>группа-объект-состояние</code>.</p>
+
+      <div class="code-section">
+        <h3>Коды построений</h3>
+        <div class="code-grid">
+          <div class="code-item"><span class="code">1-1</span><span>Плац</span></div>
+          <div class="code-item"><span class="code">1-2</span><span>Бункер</span></div>
+          <div class="code-item"><span class="code">1-3</span><span>Полигон</span></div>
+          <div class="code-item"><span class="code">1-4</span><span>По координатам</span></div>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <h3>Коды постов</h3>
+        <div class="code-grid">
+          <div class="code-item"><span class="code">2-0</span><span>КПП-1</span></div>
+          <div class="code-item"><span class="code">2-1</span><span>Склад</span></div>
+          <div class="code-item"><span class="code">2-2</span><span>Бункер</span></div>
+          <div class="code-item"><span class="code">2-3</span><span>Трубы</span></div>
+          <div class="code-item"><span class="code">2-4</span><span>ГВ-1</span></div>
+          <div class="code-item"><span class="code">2-5</span><span>Покинул пост</span></div>
+        </div>
+        <div class="callout callout-info">
+          <div>
+            <strong>Формат доклада:</strong> <code>/r 2-4-1</code> — последняя цифра обозначает состояние, первые две — пост.
+            <div class="chip-row">
+              <span class="chip">1 — стабильное</span>
+              <span class="chip">2 — наготове</span>
+              <span class="chip">3 — нападение</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <h3>Коды сопровождений</h3>
+        <div class="code-grid code-grid-wide">
+          <div class="code-item"><span class="code">3-1</span><span>Начал сопровождение колонны</span></div>
+          <div class="code-item"><span class="code">3-2</span><span>Продолжил сопровождение колонны</span></div>
+          <div class="code-item"><span class="code">3-3</span><span>Закончил сопровождение колонны</span></div>
+          <div class="code-item"><span class="code">3-4</span><span>Начал воздушный патруль</span></div>
+          <div class="code-item"><span class="code">3-5</span><span>Продолжил воздушный патруль</span></div>
+          <div class="code-item"><span class="code">3-6</span><span>Закончил воздушный патруль</span></div>
+          <div class="code-item"><span class="code">3-7</span><span>Начал ПВМ</span></div>
+          <div class="code-item"><span class="code">3-8</span><span>Продолжил ПВМ</span></div>
+          <div class="code-item"><span class="code">3-9</span><span>Закончил ПВМ</span></div>
+          <div class="code-item"><span class="code">3-10</span><span>Начал ВИП</span></div>
+          <div class="code-item"><span class="code">3-11</span><span>Закончил ВИП</span></div>
+          <div class="code-item"><span class="code">3-12</span><span>Начал работу в составе призывной комиссии</span></div>
+          <div class="code-item"><span class="code">3-13</span><span>Продолжил работу в составе призывной комиссии</span></div>
+          <div class="code-item"><span class="code">3-14</span><span>Продолжил работу в составе призывной комиссии</span></div>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <h3>Коды реагирований</h3>
+        <div class="code-grid code-grid-wide">
+          <div class="code-item"><span class="code">4-1</span><span>Нападение на склад</span></div>
+          <div class="code-item"><span class="code">4-2</span><span>Склад отбит</span></div>
+          <div class="code-item"><span class="code">4-3</span><span>Выезд на поезд</span></div>
+          <div class="code-item"><span class="code">4-4</span><span>Отбитие поезда</span></div>
+          <div class="code-item"><span class="code">4-5</span><span>Возвращение с отбития поезда</span></div>
+          <div class="code-item"><span class="code">4-6</span><span>Выехал на Спецоперацию</span></div>
+          <div class="code-item"><span class="code">4-7</span><span>Нахождение на Спецоперации</span></div>
+          <div class="code-item"><span class="code">4-8</span><span>Прибыл с Спецоперации</span></div>
+          <div class="code-item"><span class="code">4-9</span><span>Выехал на сигнал SOS</span></div>
+          <div class="code-item"><span class="code">4-10</span><span>Прибыл на сигнал SOS</span></div>
+        </div>
+      </div>
+
+      <div class="code-section">
+        <h3>Общение в рацию</h3>
+        <div class="code-grid">
+          <div class="code-item"><span class="code">5-1</span><span>На связь</span></div>
+          <div class="code-item"><span class="code">5-2</span><span>На связи</span></div>
+          <div class="code-item"><span class="code">5-3</span><span>Да</span></div>
+          <div class="code-item"><span class="code">5-4</span><span>Нет</span></div>
+          <div class="code-item"><span class="code">5-5</span><span>Конец связи</span></div>
+        </div>
+      </div>
+      </template>
+
+      <h2>Документы</h2>
+      <div class="link-list">
+        <a class="doc-link" href="https://forum.amazing-online.com/threads/federalnyj-zakon-ob-oruzhii-n-150-fz.839756/" target="_blank" rel="noopener">
+          <span>ФЗ об оружии № 150-ФЗ</span><span class="arrow">↗</span>
+        </a>
+        <a class="doc-link" href="https://forum.amazing-online.com/threads/federalnyj-zakon-o-statuse-voennosluzhaschix-n-76-fz.847737/" target="_blank" rel="noopener">
+          <span>ФЗ о статусе военнослужащих № 76-ФЗ</span><span class="arrow">↗</span>
+        </a>
+        <a class="doc-link" href="https://forum.amazing-online.com/forums/specialnoe-podrazdelenie.592/" target="_blank" rel="noopener">
+          <span>Спец. отряд</span><span class="arrow">↗</span>
+        </a>
+        <a class="doc-link" href="https://forum.amazing-online.com/threads/polozhenie-o-podrazdelenijax-gosudarstvennyx-organizacij.823624/" target="_blank" rel="noopener">
+          <span>Положение о СО</span><span class="arrow">↗</span>
+        </a>
+        <a class="doc-link" href="https://forum.amazing-online.com/threads/pravila-provedenija-rolevyx-situacij-rp-grp-v-processe-redaktirovanija-upd-18-11-2023.823539/" target="_blank" rel="noopener">
+          <span>Правила RP-ситуаций</span><span class="arrow">↗</span>
+        </a>
+      </div>
+
+      <div class="disclaimer">
+        Материал предназначен для ролевого проекта и не является реальной медицинской или инженерной инструкцией.
+      </div>
+    </section>
+
+    <!-- ==================== АТТЕСТАЦИЯ ==================== -->
+    <section class="page" data-route="attestation" id="page-attestation">
+      <div class="page-head">
+        <span class="eyebrow">Проверка рекрута</span>
+        <h1>Аттестация</h1>
+        <p class="lead">Аттестация на должность оперативника проходит в два этапа: теория и практика. Отмечайте пройденные темы — прогресс сохраняется в браузере.</p>
+      </div>
+
+      <div class="grid-2">
+        <article class="card stage-card">
+          <span class="stage-num">I</span>
+          <h2>Теория</h2>
+          <ul class="checklist">
+            <li><label><input type="checkbox" data-key="att-1"><span>Разминирование СВУ</span></label></li>
+            <li><label><input type="checkbox" data-key="att-2"><span>Оказание первой помощи</span></label></li>
+            <li><label><input type="checkbox" data-key="att-3"><span>Ведение переговоров</span></label></li>
+            <li><label><input type="checkbox" data-key="att-4"><span>ФЗ о статусе военнослужащих</span></label></li>
+            <li><label><input type="checkbox" data-key="att-5"><span>Штурм</span></label></li>
+          </ul>
+        </article>
+
+        <article class="card stage-card">
+          <span class="stage-num">II</span>
+          <h2>Практика</h2>
+          <ul class="checklist">
+            <li><label><input type="checkbox" data-key="att-6"><span>Разминирование СВУ</span></label></li>
+            <li><label><input type="checkbox" data-key="att-7"><span>Оказание первой помощи</span></label></li>
+            <li><label><input type="checkbox" data-key="att-8"><span>Ведение переговоров</span></label></li>
+          </ul>
+          <p class="muted small">Практика принимается после успешной сдачи теории.</p>
+        </article>
+      </div>
+
+      <div class="progress-card">
+        <div class="progress-card-head">
+          <span>Готовность к аттестации</span>
+          <strong id="attestProgress">0 / 8</strong>
+        </div>
+        <div class="bar"><span id="attestBar"></span></div>
+      </div>
+
+      <h2>Что повторить</h2>
+      <div class="quick-grid">
+        <a class="quick-card" href="#/svu"><span class="quick-num">01</span><h3>СВУ</h3><p>Типы устройств и порядок обезвреживания.</p></a>
+        <a class="quick-card" href="#/first-aid"><span class="quick-num">02</span><h3>Первая помощь</h3><p>Алгоритм и состояния пострадавшего.</p></a>
+        <a class="quick-card" href="#/negotiations"><span class="quick-num">03</span><h3>Переговоры</h3><p>Цели, действия и запреты.</p></a>
+        <a class="quick-card" href="#/assault"><span class="quick-num">04</span><h3>Штурм</h3><p>Группы, термины и тактики.</p></a>
+      </div>
+    </section>
+
+    <!-- ==================== СВУ ==================== -->
+    <section class="page" data-route="svu" id="page-svu">
+      <div class="page-head">
+        <span class="eyebrow">Инженерная подготовка</span>
+        <h1>СВУ</h1>
+        <p class="lead">Самодельные взрывные устройства: классификация, порядок обезвреживания и отыгровки действий сапёра.</p>
+        <div class="tools">
+          <button class="btn btn-sm" data-details="open" data-scope="svu">Развернуть всё</button>
+          <button class="btn btn-sm" data-details="close" data-scope="svu">Свернуть</button>
+        </div>
+      </div>
+
+      <div class="callout callout-warn">
+        <div>
+          <strong>Определение.</strong> СВУ — устройство, изготовленное в кустарных условиях, состоящее из взрывчатого вещества (в том числе с использованием имитационных и пиротехнических средств) и горючих составов. К СВУ также относятся устройства промышленного или военного назначения, содержащие элементы кустарного изготовления.
+        </div>
+      </div>
+
+      <h2 id="svu-types">Типы взрывных устройств</h2>
+      <div class="grid-4">
+        <div class="card mini"><span class="mini-tag">01</span><h3>Самодельное</h3><p>СВУ кустарного изготовления.</p></div>
+        <div class="card mini"><span class="mini-tag">02</span><h3>По принципу</h3><p>Механические, электромеханические, дистанционные, химические.</p></div>
+        <div class="card mini"><span class="mini-tag">03</span><h3>Боеприпасы</h3><p>Мины, растяжки, артиллерийские снаряды.</p></div>
+        <div class="card mini"><span class="mini-tag">04</span><h3>Особые</h3><p>Пояс смертника.</p></div>
+      </div>
+
+      <h2>Правила обезвреживания</h2>
+      <ol class="steps">
+        <li><strong>Безопасность.</strong> Убедиться, что рядом нет угроз для вас и окружающих гражданских.</li>
+        <li><strong>Подавление связи.</strong> Установить генератор радиопомех, чтобы исключить дистанционный подрыв.</li>
+        <li><strong>Осмотр.</strong> Внимательно изучить устройство, определить принцип действия и классификацию.</li>
+        <li><strong>Обезвреживание.</strong> Действовать в зависимости от типа устройства.</li>
+      </ol>
+      <div class="callout callout-info">
+        <div>Если обезвредить устройство невозможно или оно уже обезврежено — СВУ помещается в специальный контейнер и вывозится на полигон для контролируемого подрыва. Если устройство находится на заложнике, сначала обезвреживают СВУ, затем гражданских немедленно вывозят на безопасное расстояние.</div>
+      </div>
+
+      <h2 id="svu-order">Порядок разминирования</h2>
+      <ol class="steps">
+        <li>Осмотреть территорию.</li>
+        <li>Взять из машины набор сапёра и кейс для СВУ.</li>
+        <li>Достать из набора генератор радиопомех, установить на землю и включить.</li>
+        <li>Достать из разгрузки индикаторную (инжекторную) отвёртку. Если устройство закрыто — найти крепление крышки, открыть отвёрткой и убрать её в сторону.</li>
+        <li>Индикаторной отвёрткой найти нужный провод.</li>
+        <li>Достать кусачки и перекусить провод. <span class="muted">Итог: СВУ обесточено.</span></li>
+        <li>Снять с бронежилета кейс, открыть и поставить рядом с СВУ.</li>
+        <li>Вынуть тротиловую шашку, отделить шашку взрывателя, от неё — капсюль.</li>
+        <li>Уложить компоненты в бронированный кейс, закрыть, закрепить на лямках бронежилета. <span class="muted">Итог: СВУ обезврежено.</span></li>
+      </ol>
+
+      <div class="subheading">
+        <h3>Контролируемый подрыв на полигоне</h3>
+      </div>
+      <ol class="steps">
+        <li>Достать инженерную лопату, выкопать яму.</li>
+        <li>Открыть кейс, поместить тротиловую шашку в яму.</li>
+        <li>Достать детонатор, положить в яму. Достать комплект проводов, подключить детонатор к шашке.</li>
+        <li>Достать пульт детонатора, нажать красную кнопку. <span class="muted">Итог: СВУ взорвано.</span></li>
+      </ol>
+
+      <h2>Обезвреживание по типам</h2>
+
+      <details class="acc">
+        <summary>Дистанционный тип</summary>
+        <div class="acc-body">
+          <pre class="rp"><code>/me снимает набор сапёра с разгрузки, открывает его, достаёт индикаторную отвёртку и генератор радиопомех
+/me активирует генератор радиопомех, устанавливает на пол, осматривает взрывное устройство
+/me откручивает крышку СВУ, прозванивает провода, находит нужный провод и перерезает его
+/do СВУ обесточено.
+/me снимает с разгрузки бронированный кейс, открывает его и ставит на пол
+/me выкручивает из СВУ тротиловую шашку, из шашки — взрыватель, из взрывателя — капсюль
+/me раскладывает компоненты СВУ по кейсам, закрывает кейсы, вешает на крепления бронежилета
+/do СВУ обезврежено.</code></pre>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Химический тип</summary>
+        <div class="acc-body">
+          <pre class="rp"><code>/me достаёт химическую защиту, надевает её
+/me снимает набор сапёра с разгрузки, открывает его, достаёт индикаторную отвёртку
+/me осматривает взрывное устройство, после чего откручивает крышку
+/me осматривает содержимое корпуса и обнаруживает химический взрыватель
+/me снимает с разгрузки бронированный кейс с песком, открывает и ставит на пол
+/me выкручивает химический взрыватель из тротиловой шашки (разрешено вытащить шашку целиком)
+/me раскладывает компоненты СВУ по кейсам с песком, закрывает кейсы, вешает на крепления бронежилета
+/do СВУ обезврежено.</code></pre>
+          <p class="muted small">Кейс с песком: песок поглощает радиацию и лучше фиксирует компоненты СВУ.</p>
+
+          <h4>Если в устройстве колба с реагентом</h4>
+          <p>Ингибиторы химических реакций — вещества, при которых скорость реакции уменьшается или реакция прекращается. Замедляют цепные и каталитические реакции.</p>
+          <div class="chip-row">
+            <span class="chip">Тетродотоксин</span>
+            <span class="chip">Диоксин</span>
+            <span class="chip">Сакситоксин</span>
+            <span class="chip">Оксид бериллия</span>
+          </div>
+          <pre class="rp"><code>/me достаёт химическую защиту, надевает её
+/me снимает набор сапёра с разгрузки, открывает его, достаёт индикаторную отвёртку
+/me осматривает взрывное устройство, откручивает крышку
+/me осматривает содержимое корпуса и находит химическую колбу с веществом
+/me снимает с разгрузки бронированный кейс с песком, открывает и ставит на пол
+/me достаёт из аптечки шприц и бутыль ингибитора, набирает вещество и вводит его в колбу
+/me раскладывает компоненты СВУ по кейсам с песком, закрывает кейсы, вешает на крепления бронежилета
+/do СВУ обезврежено.</code></pre>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Механический тип</summary>
+        <div class="acc-body">
+          <pre class="rp"><code>/me снимает набор сапёра с разгрузки, открывает его, достаёт индикаторную отвёртку
+/me осматривает взрывное устройство, откручивает крышку
+/me снимает с разгрузки бронированный кейс, открывает и ставит на пол
+/me выкручивает из СВУ тротиловую шашку, из шашки — взрыватель, из взрывателя — капсюль
+/me раскладывает компоненты СВУ по кейсам, закрывает кейсы, вешает на крепления бронежилета
+/do СВУ обезврежено.</code></pre>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Электромеханический тип</summary>
+        <div class="acc-body">
+          <pre class="rp"><code>/me достаёт генератор ЭМИ, устанавливает на землю и включает
+/do Электромагнитные поля уничтожены.
+/me снимает набор сапёра с разгрузки, открывает его, достаёт индикаторную отвёртку и кусачки
+/me осматривает взрывное устройство, откручивает крышку
+/me прозванивает провода, находит нужный, перекусывает его
+/me снимает с разгрузки бронированный кейс, открывает и ставит на пол
+/me выкручивает из СВУ тротиловую шашку, из шашки — взрыватель, из взрывателя — капсюль
+/me раскладывает компоненты СВУ по кейсам, закрывает кейсы, вешает на крепления бронежилета
+/do СВУ обезврежено.</code></pre>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Тип «C4»</summary>
+        <div class="acc-body">
+          <p>«C4» — самодельное взрывное устройство из тротила разной физической формы и детонатора.</p>
+          <h4>Провода не залиты металлом / залиты свинцом</h4>
+          <pre class="rp"><code>/me надевает резиновые перчатки, осматривает устройство
+/me снимает с разгрузки набор сапёра, достаёт индикаторную отвёртку и кусачки
+/me прозванивает провода, находит нужный, перекусывает его
+/do С4 обесточена.
+/me снимает с разгрузки кейс, открывает его, складывает пластид, закрывает кейс и вешает на лямки бронежилета
+/do С4 обезврежена.</code></pre>
+          <h4>Провода залиты металлом</h4>
+          <pre class="rp"><code>/me надевает резиновые перчатки, осматривает устройство
+/me снимает с разгрузки кусачки и перекусывает провод питания
+/do С4 обесточена.
+/me снимает с разгрузки кейс, открывает его, складывает пластид, закрывает кейс и вешает на лямки бронежилета
+/do С4 обезврежена.</code></pre>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Растяжка</summary>
+        <div class="acc-body">
+          <h4>С чекой</h4>
+          <pre class="rp"><code>/me обхватывает рукой корпус гранаты, одновременно просовывает палец в кольцо
+/do Спусковой рычаг заблокирован.
+/me сжимает гранату рукой, наклоняя её в сторону натяжения, затем фиксирует усики шплинта, удерживающие чеку
+/me достаёт кусачки с разгрузки и перекусывает леску
+/do Растяжка обезврежена.</code></pre>
+          <h4>Без чеки</h4>
+          <pre class="rp"><code>/me обхватывает рукой корпус гранаты
+/do Спусковой рычаг заблокирован.
+/me сжимает гранату рукой, наклоняя её в сторону натяжения
+/me достаёт кусачки с разгрузки и перекусывает леску
+/me достаёт чеку из разгрузки и вставляет её в гранату  ИЛИ  /me кидает гранату в овраг (если чеки нет)
+/do Растяжка обезврежена.</code></pre>
+          <h4>Двойная растяжка</h4>
+          <p>Одним оперативником: зафиксировать рычаг запала одной из гранат и продолжить обезвреживание второй по инструкции.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Мины</summary>
+        <div class="acc-body">
+          <h4>Противотанковая мина</h4>
+          <pre class="rp"><code>/me снимает маскирующий слой вокруг взрывателя, вставляя в отверстия штоков ударников кусок проволоки
+/me снимает с разгрузки крюк, подцепляет его к мине, отходит на 50 метров, выдёргивает мину
+/me, вернувшись, вывинчивает взрыватель против часовой стрелки и аккуратно откладывает мину в сторону
+/do Мина обезврежена.</code></pre>
+          <h4>Противопехотная мина нажимного действия (шрапнельная)</h4>
+          <pre class="rp"><code>/me разгребает грунт вокруг взрывателя, не нажимая на усики или головку взрывателя
+/me вставляет чеку в отверстие штока ударника
+/me снимает с разгрузки крюк, подцепляет его к мине, отходит на 50 метров, выдёргивает мину
+/me, вернувшись, вывинчивает взрыватель и аккуратно откладывает мину в сторону
+/do Мина обезврежена.</code></pre>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Пояс смертника</summary>
+        <div class="acc-body">
+          <div class="callout callout-danger">
+            <div><strong>Обезвреживать СВУ на теле человека строго запрещено!</strong> Исключение: повреждения, которые мешают снять пояс или причинят больший ущерб.</div>
+          </div>
+          <h4>Порядок действий</h4>
+          <ul class="bullets">
+            <li>Если СВУ дистанционного типа — обесточивание производится на теле, затем пояс аккуратно снимают, проверив на растяжки, и обезвреживают как дистанционный тип.</li>
+            <li>Если несколько секций, включая дистанционную — обесточить, снять пояс (проверив растяжки), затем обезвредить секции в правильном порядке.</li>
+            <li>Если несколько секций без дистанционной — снять пояс (проверив растяжки), затем обезвредить секции в правильном порядке.</li>
+          </ul>
+          <h4>Правильный порядок обезвреживания</h4>
+          <ol class="steps steps-compact">
+            <li>Обесточивание дистанционного типа.</li>
+            <li>Снятие пояса смертника.</li>
+            <li>Обезвреживание химического типа.</li>
+            <li>Обезвреживание механического типа.</li>
+            <li>Обезвреживание дистанционного типа.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Контролируемый подрыв</summary>
+        <div class="acc-body">
+          <pre class="rp"><code>/me достаёт сапёрную лопату, выкапывает яму
+/me снимает с разгрузки бронированный кейс, открывает, ставит на землю, достаёт тротиловую шашку и кладёт в яму
+/me достаёт с разгрузки детонатор и провода, подключает детонатор к тротиловой шашке
+/me отходит на тридцать метров и ложится ногами к СВУ (/anim 69)
+/me достаёт с разгрузки пульт детонатора и нажимает на кнопку
+/do СВУ взорвано.</code></pre>
+          <p class="muted small">Химический тип СВУ отвозится в лабораторию (ФСБ, ЕСС).</p>
+        </div>
+      </details>
+
+      <h2>Средства облегчения обезвреживания</h2>
+      <article class="card feature">
+        <h3>«Ингибитор-1М» — устройство локализации взрыва</h3>
+        <p>Снижает выделяемую при взрыве энергию, уменьшает разрушения и повреждения от осколков, существенно снижает риск пожаров.</p>
+        <ul class="bullets">
+          <li>Эффективен для СВУ массой до 1 кг в тротиловом эквиваленте и ручных гранат типа РГО.</li>
+          <li>Не требует сдвигать или касаться устройства — снижает риск срабатывания.</li>
+          <li>Применим в замкнутом пространстве и на открытой местности.</li>
+          <li>Практически исключает пожар и разрушения.</li>
+          <li>Устанавливается одним человеком, стандартный вес — 26 кг, специальная подготовка не требуется.</li>
+          <li>Модульная многокамерная конструкция; визуальный осмотр с безопасного расстояния (фал 10 м), рентген-обследование.</li>
+          <li>Позволяет локализовать взрыв у стен сооружений и в углах помещений.</li>
+        </ul>
+      </article>
+    </section>
+
+    <!-- ==================== ПЕРВАЯ ПОМОЩЬ ==================== -->
+    <section class="page" data-route="first-aid" id="page-first-aid">
+      <div class="page-head">
+        <span class="eyebrow">Медицинская подготовка</span>
+        <h1>Первая помощь</h1>
+        <p class="lead">Алгоритм действий, помощь при неотложных состояниях, ранениях, ожогах, переломах и кровотечениях.</p>
+        <div class="tools">
+          <button class="btn btn-sm" data-details="open" data-scope="first-aid">Развернуть всё</button>
+          <button class="btn btn-sm" data-details="close" data-scope="first-aid">Свернуть</button>
+        </div>
+      </div>
+
+      <div class="callout callout-danger">
+        <div><strong>Важно.</strong> Это учебный материал ролевого проекта. Он не заменяет реальную медицинскую подготовку и не является инструкцией для оказания помощи в жизни.</div>
+      </div>
+
+      <h2>Виды помощи</h2>
+      <div class="grid-2">
+        <article class="card">
+          <span class="badge badge-accent">Первая помощь</span>
+          <h3>Помощь на месте</h3>
+          <p>Совокупность простых, целесообразных мер по охране здоровья и жизни пострадавшего от травмы или внезапно заболевшего человека. Оказывается на месте происшествия, до прихода врача или транспортировки в больницу.</p>
+          <p class="muted">Правильно оказанная первая помощь сокращает время лечения, ускоряет заживление ран и часто решает исход спасения. Оказывать её может любой человек при наличии подготовки и навыков.</p>
+        </article>
+        <article class="card">
+          <span class="badge">Первая медицинская помощь</span>
+          <h3>Помощь специалистов</h3>
+          <p>Специализированная скорая медицинская помощь: врачи специализированных бригад СМП, специалисты приёмных отделений медицинских организаций.</p>
+          <p class="muted">Как правило, подразумевает эвакуацию в медицинскую организацию для неотложной или экстренной помощи наземным, воздушным, водным и другим транспортом.</p>
+        </article>
+      </div>
+
+      <div class="card">
+        <h3>Сущность первой помощи</h3>
+        <ul class="bullets">
+          <li>Прекращение дальнейшего воздействия травмирующих факторов.</li>
+          <li>Проведение простейших мероприятий при оказании помощи.</li>
+          <li>Обеспечение транспортировки в лечебное учреждение.</li>
+        </ul>
+      </div>
+
+      <h2>Состояния для оказания помощи</h2>
+      <div class="condition-grid">
+        <a class="condition" href="#/first-aid/fa-faint"><span>01</span>Отсутствие сознания</a>
+        <a class="condition" href="#/first-aid/fa-cpr"><span>02</span>Остановка дыхания и кровообращения</a>
+        <a class="condition" href="#/first-aid/fa-bleeding"><span>03</span>Наружные кровотечения</a>
+        <a class="condition" href="#/first-aid/fa-choking"><span>04</span>Инородные тела верхних дыхательных путей</a>
+        <a class="condition" href="#/first-aid/fa-fractures"><span>05</span>Травмы различных областей тела</a>
+        <a class="condition" href="#/first-aid/fa-burns"><span>06</span>Ожоги и воздействие высоких температур</a>
+        <a class="condition" href="#/first-aid/fa-frostbite"><span>07</span>Отморожение и воздействие низких температур</a>
+        <a class="condition" href="#/first-aid/fa-poisoning"><span>08</span>Отравления</a>
+      </div>
+
+      <h2 id="fa-algorithm">Алгоритм первой помощи</h2>
+      <ol class="steps">
+        <li><strong>Безопасность.</strong> Обеспечить безопасность себе, осмотреть обстановку. Только после этого — безопасность пострадавшего.</li>
+        <li><strong>Оценка состояния.</strong> Проверить пульс, дыхание, реакцию зрачков на свет. Для проверки дыхания запрокинуть голову пострадавшего и наклониться к его рту или носу, пытаясь услышать или почувствовать дыхание.</li>
+        <li><strong>Вызов специалистов.</strong> Вызвать медиков, военного врача и т.п.</li>
+        <li><strong>Неотложная помощь.</strong> Восстановить проходимость дыхательных путей, провести СЛР, остановить кровотечение и выполнить другие действия для спасения жизни.</li>
+        <li><strong>Комфорт.</strong> Обеспечить пострадавшему максимально возможный комфорт.</li>
+      </ol>
+
+      <h2>Неотложные состояния</h2>
+
+      <details class="acc" id="fa-faint">
+        <summary>Обморок</summary>
+        <div class="acc-body">
+          <p><strong>Обморок</strong> — кратковременная потеря сознания из-за временного нарушения мозгового кровотока.</p>
+          <h4>Порядок действий</h4>
+          <ol class="steps steps-compact">
+            <li>Придать горизонтальное положение с немного поднятыми ногами — чтобы кровь легче поступала в мозг.</li>
+            <li>Расслабить стесняющие дыхание элементы одежды: воротник, галстук, пояс.</li>
+            <li>Попробовать привести в сознание: сбрызнуть лицо и шею холодной водой, дать вдохнуть пары нашатырного спирта, держа его в нескольких сантиметрах от носа. Детям нашатырь не дают.</li>
+            <li>Повторно проверить дыхание и пульс. Уложить человека набок, чтобы при рвоте он не захлебнулся.</li>
+            <li>Вызвать скорую помощь.</li>
+          </ol>
+          <div class="callout callout-danger">
+            <div>
+              <strong>Чего не делать:</strong>
+              <ul class="bullets">
+                <li>трясти, тормошить, совершать резкие движения;</li>
+                <li>бить по щекам;</li>
+                <li>резко подносить нашатырь к носу или слишком близко;</li>
+                <li>насильно поить или давать медикаменты;</li>
+                <li>насильно усаживать или удерживать вертикально, прислоняя к стене;</li>
+                <li>перемещать пострадавшего, если обморок — следствие травмы.</li>
+              </ul>
+            </div>
+          </div>
+          <h4>Пример отыгровки</h4>
+          <pre class="rp"><code>/me уложил аккуратно человека в горизонтальное положение, придерживая голову пострадавшего
+/me снял разгрузочный жилет, сложил его и подложил под ноги пострадавшего
+/me начал расстёгивать одежду и расслаблять пояс на пострадавшем
+/me протянул руку к аптечке, достал нашатырь и начал водить им у носа пострадавшего
+/me начал проводить проверку пульса и дыхания у человека</code></pre>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Сотрясение головного мозга</summary>
+        <div class="acc-body">
+          <ol class="steps steps-compact">
+            <li>Уложить на кровать или ровную поверхность, под голову поместить подушку, расстегнуть одежду, если она стесняет движения или затрудняет дыхание.</li>
+            <li>Не перемещать больного при потере сознания.</li>
+            <li>Перевернуть на правый бок, согнуть левую руку и ногу — чтобы не захлебнулся рвотными массами и обеспечить поступление кислорода в лёгкие.</li>
+            <li>Следить за давлением, пульсом и температурой тела.</li>
+            <li>При остановке дыхания сделать непрямой массаж сердца.</li>
+            <li>Наложить повязку.</li>
+            <li>На место ушиба приложить холодный компресс — это снимет отёк.</li>
+          </ol>
+          <h4>Пример отыгровки</h4>
+          <pre class="rp"><code>/me начал аккуратно укладывать человека в горизонтальное положение, придерживая голову
+/me достал плед из разгрузочного жилета и подложил его под голову пострадавшего
+/me начал расстёгивать воротник пострадавшего
+/me начал аккуратно переворачивать человека на правый бок, подкладывая левую руку ему под щёку, затем согнул левую ногу
+/me начал проверку пульса и дыхания пострадавшего</code></pre>
+        </div>
+      </details>
+
+      <details class="acc" id="fa-cpr">
+        <summary>Сердечно-лёгочная реанимация (СЛР)</summary>
+        <div class="acc-body">
+          <p><strong>СЛР</strong> — комплекс неотложных мероприятий для восстановления жизнедеятельности организма и выведения из клинической смерти. Применяется при отсутствии признаков жизни: дыхания, кровообращения (пульса), сознания.</p>
+          <p>Включает два основных мероприятия, проводимых параллельно: непрямой массаж сердца и искусственную вентиляцию лёгких. Дополнительно применяется прекардиальный удар при внезапной остановке сердца в первые 10–30 секунд.</p>
+
+          <h4>Непрямой массаж сердца</h4>
+          <ul class="bullets">
+            <li>Выполняется параллельно с ИВЛ в соотношении <strong>2 к 30</strong>: два вдоха — тридцать нажатий.</li>
+            <li>Пострадавший лежит на спине на жёсткой поверхности. Спасатель стоит или стоит на коленях сбоку.</li>
+            <li>Одна ладонь — на нижнюю половину грудины, пальцы перпендикулярны. Сверху — вторая рука. Приподнятые пальцы не касаются тела.</li>
+            <li>Прямые руки перпендикулярны грудной клетке. Массаж — быстрыми толчками тяжестью всего тела, не сгибая руки в локтях.</li>
+            <li>Частота сжатий — <strong>80–100 в минуту</strong>, грудина прогибается примерно на треть (около 5 см у взрослого).</li>
+            <li>Проводится до прибытия скорой или появления признаков биологической смерти.</li>
+          </ul>
+
+          <h4>Искусственная вентиляция лёгких</h4>
+          <p>Два способа: «изо рта в рот» и в крайнем случае «изо рта в нос».</p>
+          <ol class="steps steps-compact">
+            <li>Освободить рот и нос пострадавшего от содержимого.</li>
+            <li>Запрокинуть голову так, чтобы между подбородком и шеей образовался тупой угол.</li>
+            <li>Сделать глубокий вдох, зажать нос пострадавшего, плотно обхватить губами его губы и выдохнуть в рот.</li>
+            <li>Убрать пальцы от носа. Интервал между вдохами — 4–5 секунд.</li>
+          </ol>
+          <p>Соотношение вдохов и нажатий — 2 к 30. Желательно использовать барьеры: от носового платка до специальных плёнок и масок из аптечки.</p>
+        </div>
+      </details>
+
+      <details class="acc" id="fa-frostbite">
+        <summary>Отморожение</summary>
+        <div class="acc-body">
+          <p><strong>Отморожение</strong> — повреждение тканей при низких температурах. В первую очередь страдают уши, нос, щёки, кисти рук.</p>
+          <p><strong>Симптомы:</strong> потеря чувствительности поражённых участков, ощущение покалывания.</p>
+          <h4>Степени</h4>
+          <div class="grid-4">
+            <div class="card mini"><span class="mini-tag">1</span><h3>Побеление</h3><p>Побеление кожи.</p></div>
+            <div class="card mini"><span class="mini-tag">2</span><h3>Волдыри</h3><p>Появление волдырей.</p></div>
+            <div class="card mini"><span class="mini-tag">3</span><h3>Отмирание</h3><p>Потемнение и отмирание кожи.</p></div>
+            <div class="card mini"><span class="mini-tag">4</span><h3>Тяжёлая</h3><p>Отмирание слоёв мягких тканей вплоть до костей и суставов; поражённые участки подлежат ампутации.</p></div>
+          </div>
+          <h4>Первая помощь</h4>
+          <ol class="steps steps-compact">
+            <li>Уйти с холода в тёплое помещение.</li>
+            <li>Вызвать скорую помощь.</li>
+            <li>Осторожно растирать поражённые участки тела.</li>
+            <li>Наложить согревающую повязку в несколько слоёв, дать выпить горячего чая.</li>
+          </ol>
+          <div class="callout callout-danger">
+            <div><strong>Запрещено</strong> давать алкогольные напитки: это расширяет сосуды и может привести к летальному исходу.</div>
+          </div>
+        </div>
+      </details>
+
+      <details class="acc" id="fa-burns">
+        <summary>Ожоги</summary>
+        <div class="acc-body">
+          <p><strong>Ожоги</strong> — травмы от высокотемпературного, химического, электрического или радиационного воздействия, повреждающего кожу и подлежащие ткани. Виды: термический и химический.</p>
+          <ol class="steps steps-compact">
+            <li><strong>Удалить источник.</strong> Горящую одежду потушить водой или пеной. При химическом ожоге удалить остатки вещества с кожи. Не смывать водой негашёную известь и органические алюминиевые соединения — они воспламеняются от воды; сначала нейтрализовать сухой тканью.</li>
+            <li><strong>Охладить.</strong> Прохладная проточная вода 15–20 минут. При большой площади завернуть пострадавшего в чистую простыню, смоченную прохладной водой.</li>
+            <li><strong>Защитить от инфекции.</strong> Промыть раствором фурацилина.</li>
+            <li><strong>Повязка.</strong> Наложить лёгкую стерильную марлевую повязку, не сдавливая место ожога.</li>
+            <li><strong>Фиксация.</strong> При ожоге конечностей осторожно наложить шины.</li>
+            <li><strong>Обезболивание.</strong> Дать анальгетик или жаропонижающее — для профилактики болевого шока и резкого подъёма температуры.</li>
+          </ol>
+          <div class="callout callout-warn">
+            <div><strong>Волдыри</strong> обрабатывать очень осторожно. Первая помощь не предусматривает нарушения их целостности: вскрытие и удаление жидкости проводят в больнице.</div>
+          </div>
+
+          <h4>Ожог глаз</h4>
+          <p>Часто связан с ожогом лица, но может возникать от капельного попадания химических веществ или искры.</p>
+          <p><strong>Термический ожог:</strong></p>
+          <ol class="steps steps-compact">
+            <li>Срочно изолировать больного от яркого света.</li>
+            <li>Закапать 0,5% раствор дикаина, лидокаина или новокаина.</li>
+            <li>Провести внутреннее обезболивание — приём анальгетика.</li>
+            <li>Закапать 30% раствор сульфацил-натрия или 2% раствор левомицетина.</li>
+            <li>Немедленно следовать в больницу.</li>
+          </ol>
+          <p><strong>Химический ожог:</strong> сухой ватной палочкой удалить остатки вещества; мягким тампоном, обильно смоченным раствором пищевой соды, промывать глаза 20–25 минут. Далее действовать как при термическом ожоге.</p>
+
+          <h4>Ожог лица</h4>
+          <p>Требует медицинского вмешательства. До приезда скорой: охладить обожжённый участок, промокнуть мокрой холодной марлевой салфеткой.</p>
+
+          <h4>Ожог пальца</h4>
+          <p>Ожог 1–2 степени не требует госпитализации:</p>
+          <ol class="steps steps-compact">
+            <li>15–20 минут подержать под проточной прохладной водой.</li>
+            <li>Промыть участок раствором фурацилина или перекиси водорода.</li>
+            <li>Наложить свободную стерильную марлевую повязку.</li>
+          </ol>
+          <p>При сильных ожогах охлаждение проводят, обернув палец стерильной прохладной мокрой тканью, далее — к врачу.</p>
+
+          <h4>Ожог руки</h4>
+          <p>Ожог руки любой степени требует медицинской помощи: площадь травмы может быть большой, возможно развитие болевого шока.</p>
+          <ol class="steps steps-compact">
+            <li>Охлаждать прохладной водой 20 минут.</li>
+            <li>При химическом ожоге промывать не менее 40 минут.</li>
+          </ol>
+
+          <h4>Ожог пищевода</h4>
+          <p>Возникает при заглатывании агрессивных химических веществ — ожог пищевода и гортани.</p>
+          <ol class="steps steps-compact">
+            <li>Принять большое количество воды или молока, чтобы снизить концентрацию вещества.</li>
+            <li>После этого, скорее всего, наступит рвота — первичное промывание пищевода и желудка.</li>
+            <li>Срочно обратиться в больницу.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="acc" id="fa-poisoning">
+        <summary>Отравление угарным газом</summary>
+        <div class="acc-body">
+          <ol class="steps steps-compact">
+            <li>Вызвать скорую помощь.</li>
+            <li>Устранить поступление угарного газа.</li>
+            <li>Проветрить помещение, открыть окна и двери, покинуть помещение.</li>
+            <li>Если пострадавший в сознании — обеспечить непрерывный доступ свежего воздуха и кратковременное вдыхание нашатырного спирта, растереть тело.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Ножевое ранение</summary>
+        <div class="acc-body">
+          <p>В первую очередь остановить кровотечение, затем продезинфицировать рану.</p>
+          <p>Кровотечение останавливают марлевым тампоном, который меняют по мере наполнения кровью. Тампон обязательно должен быть стерильным.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Огнестрельное ранение</summary>
+        <div class="acc-body">
+          <div class="callout callout-danger">
+            <div><strong>Запрещено</strong> пытаться вытащить пулю из раны — этим занимаются врачи-хирурги.</div>
+          </div>
+          <h4>Виды по траектории</h4>
+          <div class="grid-3">
+            <div class="card mini"><h3>Входное</h3><p>Пуля вошла в тело и осталась внутри.</p></div>
+            <div class="card mini"><h3>Сквозное</h3><p>Пуля прошла насквозь.</p></div>
+            <div class="card mini"><h3>Касательное</h3><p>Пуля задела тело.</p></div>
+          </div>
+          <h4>Порядок помощи</h4>
+          <ol class="steps steps-compact">
+            <li>Вызвать скорую помощь.</li>
+            <li>Проверить сознание и дыхание. Если дыхания нет — сделать массаж сердца.</li>
+            <li>Если человек без сознания — запрокинуть голову назад и немного повернуть вбок, чтобы обеспечить проходимость дыхательных путей.</li>
+            <li>Определить вид кровотечения и остановить его. При артериальном — сразу наложить жгут.</li>
+            <li>Обработать края раны антисептиком: зелёнка, йод, раствор фурацилина.</li>
+            <li>Наложить давящую повязку (тампонад) на отверстие. При сквозном ранении — на оба отверстия, входное и выходное.</li>
+            <li>Переместить пострадавшего на ровную твёрдую поверхность, накрыть пледом или одеялом.</li>
+            <li>Если пострадавший в сознании — постоянно поддерживать словесный контакт, следить за дыханием, пульсом и давлением.</li>
+          </ol>
+        </div>
+      </details>
+
+      <details class="acc" id="fa-fractures">
+        <summary>Переломы</summary>
+        <div class="acc-body">
+          <p><strong>Перелом</strong> — нарушение анатомической целостности кости. Бывают закрытыми и открытыми.</p>
+
+          <h4>Закрытый перелом</h4>
+          <p>Кожный покров не нарушен, выхода кости не видно. Признаки: припухлость, выступающие кости, упирающиеся в кожу, искривление конечностей.</p>
+          <ol class="steps steps-compact">
+            <li>Вызвать скорую помощь.</li>
+            <li>Обеспечить неподвижность, уложить в удобную позу на ровной твёрдой поверхности.</li>
+            <li>Определить, в какой конечности или части тела перелом.</li>
+            <li>Наложить шину на повреждённую конечность.</li>
+            <li>Приложить холодный компресс.</li>
+            <li>Успокоить пострадавшего, поддерживать контакт, контролировать пульс и дыхание. Дать воды или горячего чая.</li>
+          </ol>
+
+          <h4>Открытый перелом</h4>
+          <p>Наиболее опасен: при повреждении кожного покрова образуется открытая рана, возможен риск инфекционного заражения крови.</p>
+          <ol class="steps steps-compact">
+            <li>Вызвать скорую помощь.</li>
+            <li>Проверить сознание и дыхание. Если дыхания нет — сделать массаж сердца.</li>
+            <li>Обеспечить неподвижность.</li>
+            <li>При кровотечении определить его вид и оказать помощь.</li>
+            <li>Обработать края открытой раны антисептиком: спирт, йод, зелёнка, перекись водорода, марганцовка, раствор фурацилина.</li>
+            <li>Наложить стерильную салфетку или чистую хлопчатобумажную ткань.</li>
+            <li>Наложить шину. <strong>Ни в коем случае</strong> не вправлять кость и не трогать место перелома.</li>
+            <li>Дать воды или горячего чая.</li>
+          </ol>
+
+          <h4>Наложение шины</h4>
+          <p>Назначение — обездвижить повреждённую конечность. Шина делается из любого твёрдого удлинённого предмета: доски, палки, металлической трубки, ветки.</p>
+          <ul class="bullets">
+            <li>Твёрдый предмет прикладывается с двух сторон, не задевая перелом, и плотно фиксируется.</li>
+            <li>Фиксация — куском ткани, бинтом, верёвкой, ремнём.</li>
+            <li>Если подходящих предметов нет, роль шины может выполнить другая неповреждённая часть тела.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details class="acc" id="fa-bleeding">
+        <summary>Кровотечения</summary>
+        <div class="acc-body">
+          <p>Виды наружных кровотечений различаются по степени опасности и источнику.</p>
+
+          <h4>Паренхиматозное · IV степень опасности</h4>
+          <p>Вид внутреннего кровотечения, вызванный повреждением внутренних органов: печени, почек, лёгких и других.</p>
+          <p>Первая помощь — вызов скорой и контроль признаков жизни. Человек без медицинского образования не может оказывать помощь при этом виде кровотечения.</p>
+
+          <h4>Артериальное · III степень опасности</h4>
+          <p>Очень тяжёлая травма, при отсутствии помощи может привести к летальному исходу. Самое опасное из всех видов кровотечений.</p>
+          <p><strong>Признаки:</strong> пульсирующая струя алой крови; кровь ярко-красная; не уменьшается при обычном придавливании раны или тканей выше и ниже неё.</p>
+          <ol class="steps steps-compact">
+            <li>Вызвать скорую помощь.</li>
+            <li>Крепко пережать артерию пальцем или кулаком, ослабив кровотечение. Выполнить как можно быстрее.</li>
+            <li>Наложить жгут или турникет выше ранения, передавливая артерию; первые два тура — как можно туже. Жгут можно сделать из верёвки, ткани, бинта, ремня.</li>
+            <li>Накрыть ранение стерильной салфеткой или бинтом, чтобы избежать заражения крови, и дождаться врачей.</li>
+          </ol>
+          <div class="callout callout-warn">
+            <div>
+              <strong>Правила наложения жгута:</strong>
+              <ul class="bullets">
+                <li>первые два тура должны быть тугими — именно они останавливают основной поток крови;</li>
+                <li>жгут накладывается поверх одежды или на кожу с подкладкой из ткани;</li>
+                <li>максимальное время — 60 минут, периодически ослаблять давление;</li>
+                <li>после наложения приложить записку с указанием времени.</li>
+              </ul>
+            </div>
+          </div>
+
+          <h4>Венозное · II степень опасности</h4>
+          <p>Возникает при поверхностных и глубоких ранениях, когда нарушается целостность подкожных или межмышечных вен.</p>
+          <p><strong>Признаки:</strong> густая тёмная кровь; медленный поток крови из раны; уменьшается при придавливании участка ниже ранения.</p>
+          <ol class="steps steps-compact">
+            <li>Если кровотечение сильное — пережать вену и наложить жгут по правилам артериального кровотечения.</li>
+            <li>Наложить давящую повязку (тампонад) — самая важная мера: попадание воздуха в вену может привести к летальному исходу.</li>
+            <li>Плотно зафиксировать повязку бинтом или верёвкой.</li>
+          </ol>
+          <p><strong>Слои тампонада:</strong> стерильная салфетка → плотный слой ваты → стерильная салфетка, всё плотно завязать.</p>
+
+          <h4>Капиллярное · I степень опасности</h4>
+          <p>Самый частый вид наружных кровотечений. Возникает при любых травмах с нарушением целостности кожи. Проявляется неинтенсивным равномерным истечением крови из-за повреждения капилляров. Редко приводит к сильной кровопотере — чаще останавливается самостоятельно.</p>
+          <p><strong>Признаки:</strong> ярко-красная кровь в небольшом количестве.</p>
+          <ol class="steps steps-compact">
+            <li>Если кровотечение сильное или площадь поражения большая — вызвать скорую.</li>
+            <li>Обработать кожу вокруг раны антисептиком. Важно: обрабатывать только края раны, заливать средства в рану запрещено.</li>
+            <li>При подозрении на заражение крови — обязательно вызвать скорую.</li>
+            <li>Наложить вату или стерильную салфетку и зафиксировать.</li>
+          </ol>
+          <p>Общие меры: наложить стерильную повязку, поднять конечность с ранением.</p>
+        </div>
+      </details>
+
+      <details class="acc" id="fa-choking">
+        <summary>Инородное тело в дыхательных путях</summary>
+        <div class="acc-body">
+          <p>Состояние входит в перечень для оказания первой помощи. При полной закупорке дыхательных путей человек не может говорить, кашлять и дышать.</p>
+          <ul class="bullets">
+            <li>Побудить пострадавшего кашлять, если он может.</li>
+            <li>При полной закупорке — выполнить приём Геймлиха: встать сзади, обхватить, надавливать кулаком в область живота между пупком и грудиной резкими толчками внутрь и вверх.</li>
+            <li>Беременным и тучным — толчки в нижнюю часть грудной клетки.</li>
+            <li>При потере сознания — уложить и начать СЛР, вызвать скорую.</li>
+          </ul>
+          <p class="muted small">Дополнено по общему перечню состояний; в оригинале отдельного раздела не было.</p>
+        </div>
+      </details>
+    </section>
+
+    <!-- ==================== ШТУРМ ==================== -->
+    <section class="page" data-route="assault" id="page-assault">
+      <div class="page-head">
+        <span class="eyebrow">Тактическая подготовка</span>
+        <h1>Штурм</h1>
+        <p class="lead">Правила проведения штурма, состав групп, профессиональная терминология и тактики зачистки помещений.</p>
+      </div>
+
+      <h2>Штурмовые группы</h2>
+      <div class="grid-2">
+        <article class="card"><span class="badge badge-accent">1</span><h3>Штурмовая</h3><p>Разбиваются на двойки или тройки. Участники страхуют друг друга и работают сообща.</p><p class="muted small">Состав: ФСБ, СО, СР.</p></article>
+        <article class="card"><span class="badge badge-accent">2</span><h3>Закрепление</h3><p>Любое количество человек. Стоят на позициях и точках, обеспечивая охрану и безопасность. Назначает командование или главный по спецоперации.</p><p class="muted small">Состав: сотрудники полиции, ВЧ.</p></article>
+        <article class="card"><span class="badge badge-accent">3</span><h3>Резерв</h3><p>Треть участников штурма. Делятся на группы и подгруппы, функции как у первых двух. Используются для подкрепления.</p><p class="muted small">Состав: СО, СР, ВЧ, УВД, ГИБДД, внештатные сотрудники ФСБ.</p></article>
+        <article class="card"><span class="badge badge-accent">4</span><h3>Эвакуация</h3><p>4–5 оперативников. При задействовании резерва для вывода одной из первых групп обеспечивает эвакуацию всех групп при отступлении или окончании штурма.</p></article>
+      </div>
+
+      <h2>Терминология</h2>
+      <div class="term-grid">
+        <div class="term"><span class="term-key">полсотни пять</span><span>Первая штурмовая группа</span></div>
+        <div class="term"><span class="term-key">полсотни четыре</span><span>Группа закрепления</span></div>
+        <div class="term"><span class="term-key">полсотни три</span><span>Группа резерва</span></div>
+        <div class="term"><span class="term-key">полсотни два</span><span>Группа эвакуации</span></div>
+        <div class="term"><span class="term-key">часовой</span><span>Указывает направление цели, количество врагов, примерное время до контакта, передаёт разведданные</span></div>
+        <div class="term"><span class="term-key">левый сектор, чисто</span><span>Угроза нейтрализована или отсутствует в левой части здания/этажа</span></div>
+        <div class="term"><span class="term-key">правый сектор, чисто</span><span>Угроза нейтрализована или отсутствует в правой части здания/этажа</span></div>
+        <div class="term"><span class="term-key">держу / прикрываю</span><span>Обозначение прикрытия группы, входящей в помещение</span></div>
+        <div class="term"><span class="term-key">закрепил</span><span>Замыкающий прикрывает спину</span></div>
+        <div class="term"><span class="term-key">пошёл</span><span>Команда командира группы продолжить движение</span></div>
+        <div class="term"><span class="term-key">воздух</span><span>Подаётся при артобстреле, миномётном обстреле или если сапёр не успевает разминировать СВУ</span></div>
+      </div>
+
+      <h2>Виды штурма</h2>
+      <div class="grid-2">
+        <article class="card">
+          <h3>Полицейский</h3>
+          <p>Штурм с лёгким стрелковым вооружением, обычно со светошумовыми и газовыми гранатами. Направлен на сохранение жизни заложников и задержание преступника.</p>
+        </article>
+        <article class="card">
+          <h3>Армейский</h3>
+          <p>Штурм с использованием лёгкого, среднего и тяжёлого вооружения. Отличается повышенным расходом боеприпасов, проводится без учёта наличия заложников и направлен на уничтожение противника.</p>
+        </article>
+      </div>
+      <div class="callout callout-info">
+        <div>
+          <p>Штурму должна предшествовать тщательная разведка и подготовка.</p>
+          <p>При штурме стоит стараться задержать как можно больше преступников: чем больше нападавших — тем больше информации. Исключение — отбитие крупного нападения на склад ВЧ.</p>
+        </div>
+      </div>
+
+      <h2>Тактики зачистки помещений</h2>
+
+      <div class="tactic-grid">
+        <article class="card tactic">
+          <h3>«Крючок»</h3>
+          <svg class="diagram" viewBox="0 0 240 150" role="img" aria-label="Схема тактики Крючок">
+            <defs><marker id="ah1" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7z"/></marker></defs>
+            <path class="dg-wall" d="M60 92 V20 H210 V130 H60 V58"/>
+            <line class="dg-door" x1="60" y1="58" x2="60" y2="92"/>
+            <circle class="dg-dot" cx="47" cy="66" r="5"/><circle class="dg-dot" cx="47" cy="84" r="5"/>
+            <path class="dg-arrow" marker-end="url(#ah1)" d="M50 64 Q75 55 95 40"/>
+            <path class="dg-arrow" marker-end="url(#ah1)" d="M50 86 Q75 95 95 110"/>
+            <text class="dg-label" x="36" y="60">№1</text><text class="dg-label" x="36" y="96">№2</text>
+          </svg>
+          <p>Применяется при короткоствольном оружии и достаточной ширине двери. Сотрудники у двери после взлома одновременно встают на колено, одной рукой держатся за косяк, другую с оружием выводят вперёд, затем одновременно входят, пригнувшись, контролируя каждый своё направление.</p>
+          <p class="muted small"><strong>Недостаток:</strong> нужны достаточно широкие двери — двое в узком проёме одновременно не пройдут. Возможен последовательный вход друг за другом.</p>
+        </article>
+
+        <article class="card tactic">
+          <h3>«Крест»</h3>
+          <svg class="diagram" viewBox="0 0 240 150" role="img" aria-label="Схема тактики Крест">
+            <defs><marker id="ah2" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7z"/></marker></defs>
+            <path class="dg-wall" d="M60 92 V20 H210 V130 H60 V58"/>
+            <line class="dg-door" x1="60" y1="58" x2="60" y2="92"/>
+            <circle class="dg-dot" cx="47" cy="68" r="5"/><circle class="dg-dot" cx="47" cy="82" r="5"/>
+            <path class="dg-arrow" marker-end="url(#ah2)" d="M52 68 L120 42"/>
+            <path class="dg-arrow" marker-end="url(#ah2)" d="M52 82 L120 108"/>
+            <text class="dg-label" x="36" y="62">№1</text><text class="dg-label" x="36" y="94">№2</text>
+          </svg>
+          <p>Ширина двери не важна: сотрудники входят один за другим. №1 выдвигается через проём, №2 координируется с ним. №1 в низкой стойке проникает по диагонали и проверяет мёртвую зону по ходу движения; №2 почти одновременно пересекает проём по диагонали в сторону противоположной мёртвой зоны и держится прямо, нависая над №1. Обе зоны зачищаются почти одновременно.</p>
+        </article>
+
+        <article class="card tactic">
+          <h3>«Угол»</h3>
+          <svg class="diagram" viewBox="0 0 240 150" role="img" aria-label="Схема тактики Угол">
+            <defs><marker id="ah3" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7z"/></marker></defs>
+            <path class="dg-wall" d="M60 92 V20 H210 V130 H60 V58"/>
+            <line class="dg-door" x1="60" y1="58" x2="60" y2="92"/>
+            <circle class="dg-dot" cx="47" cy="66" r="5"/><circle class="dg-dot" cx="47" cy="84" r="5"/>
+            <path class="dg-arrow" marker-end="url(#ah3)" d="M50 64 L85 30"/>
+            <path class="dg-arrow" marker-end="url(#ah3)" d="M52 86 L110 122"/>
+            <text class="dg-label" x="36" y="60">№1</text><text class="dg-label" x="36" y="96">№2</text>
+          </svg>
+          <p>Уместен, когда дверь расположена около стены и бойцам приходится начинать движение с противоположной от стены стороны. Возможны два варианта — выбор делает №1, который входит первым, №2 подстраивается.</p>
+        </article>
+
+        <article class="card tactic">
+          <h3>«Диагональ»</h3>
+          <svg class="diagram" viewBox="0 0 240 150" role="img" aria-label="Схема тактики Диагональ">
+            <defs><marker id="ah4" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto"><path d="M0 0 L7 3.5 L0 7z"/></marker></defs>
+            <path class="dg-wall" d="M60 92 V20 H210 V130 H60 V58"/>
+            <line class="dg-door" x1="60" y1="58" x2="60" y2="92"/>
+            <circle class="dg-dot" cx="47" cy="66" r="5"/><circle class="dg-dot" cx="47" cy="84" r="5"/>
+            <path class="dg-arrow" marker-end="url(#ah4)" d="M52 64 L150 28"/>
+            <path class="dg-arrow" marker-end="url(#ah4)" d="M52 86 L150 122"/>
+            <text class="dg-label" x="36" y="60">№1</text><text class="dg-label" x="36" y="96">№2</text>
+          </svg>
+          <p>Похожа на «угол», но №1 и №2 становятся спиной к одной из стен, контролируя всё помещение каждый в своём секторе. Применяется, когда помещение последнее и группе не нужно двигаться дальше.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ==================== ПЕРЕГОВОРЫ ==================== -->
+    <section class="page" data-route="negotiations" id="page-negotiations">
+      <div class="page-head">
+        <span class="eyebrow">Специальная операция</span>
+        <h1>Переговоры</h1>
+        <p class="lead">Цели, обязательные действия и запреты при ведении переговоров с преступниками.</p>
+      </div>
+
+      <h2>Цели переговоров</h2>
+      <div class="grid-2">
+        <article class="card"><span class="badge badge-accent">01</span><h3>Контакт</h3><p>Установить психологический контакт с преступниками для сохранения жизни заложников.</p></article>
+        <article class="card"><span class="badge badge-accent">02</span><h3>Информация</h3><p>Узнать максимум информации за минимальное время: количество преступников, мотивы, настрой, наличие и состояние заложников.</p></article>
+        <article class="card"><span class="badge badge-accent">03</span><h3>Время</h3><p>Затягивать время для подготовки действий специальных служб.</p></article>
+        <article class="card"><span class="badge badge-accent">04</span><h3>Требования</h3><p>Получить требования преступников и прийти к итогу, который устроит и власти, и преступников.</p></article>
+      </div>
+
+      <div class="callout callout-warn">
+        <div>Если преступники предлагают пройти и посмотреть на заложника — идти за ними запрещено. Исключение: угроза жизни заложнику.</div>
+      </div>
+
+      <h2>Обязательные действия</h2>
+      <ol class="steps">
+        <li>Сложить всё оружие (по РП) и направиться к захватчику.</li>
+        <li>Встать на расстоянии 10–20 метров и поднять руки.</li>
+        <li>Произнести: «Я переговорщик, власти готовы выслушать ваши требования».</li>
+        <li>Узнать про заложников: сколько их, в каком они состоянии.</li>
+        <li>Узнать все требования. Например: деньги каким номиналом, зелёный коридор куда.</li>
+        <li>После выслушивания требований узнать, как будет происходить освобождение заложника.</li>
+        <li>Спросить: «Разрешите идти выполнять ваши требования?» После разрешения — уйти.</li>
+      </ol>
+
+      <h2>Порядок работы</h2>
+      <div class="card">
+        <p>Переговоры проводятся при захвате заложников, чтобы выяснить требования преступников. Переговорщиком может быть любое должностное лицо, представляющее интересы властей: губернатор, министры, руководство полиции, оперативники ФСБ. Как правило, это сотрудник ФСБ, назначенный командующим спецоперацией (оперативным штабом).</p>
+        <ul class="bullets">
+          <li>Потребуйте вывести заложника из здания или автомобиля либо показать его из окна.</li>
+          <li>Если ситуация стабильна — выдвигайте условия по заложникам. В первую очередь пытайтесь «вытянуть» женщин, детей и пожилых людей.</li>
+          <li>При передаче выкупа старайтесь вывести сначала всех или часть заложников. Если захватчики отказываются — убедите сделать это одновременно.</li>
+          <li>Передавайте выкуп через пол. Если преступники хотят сначала пересчитать деньги — дайте им такую возможность.</li>
+          <li>При успешной передаче выкупа немедленно выводите заложников, прикрывая их собой.</li>
+        </ul>
+      </div>
+
+      <h2>Запрещено</h2>
+      <div class="grid-2">
+        <div class="card mini danger-card"><h3>Игнорировать требования</h3><p>Нельзя игнорировать требования похитителей.</p></div>
+        <div class="card mini danger-card"><h3>Рисковать заложниками</h3><p>Нельзя как-либо рисковать жизнью заложников.</p></div>
+        <div class="card mini danger-card"><h3>Провоцировать</h3><p>Нельзя провоцировать, конфликтовать и повышать тон на преступников.</p></div>
+        <div class="card mini danger-card"><h3>Идти за захватчиками</h3><p>Нельзя идти за захватчиками, если они предлагают пройти посмотреть на заложника.</p></div>
+      </div>
+
+      <div class="callout callout-danger">
+        <div><strong>Если преступники забрали выкуп и не собираются отдавать заложников — начинается штурм!</strong></div>
+      </div>
+    </section>
+
+    <!-- ==================== СИГНАЛЫ ==================== -->
+    <section class="page" data-route="signals" id="page-signals">
+      <div class="page-head">
+        <span class="eyebrow">Боевая готовность</span>
+        <h1>Специальные сигналы</h1>
+        <p class="lead">Сигналы оповещения, действия личного состава и нормативы сбора.</p>
+      </div>
+
+      <h2 id="sig-list">Список сигналов</h2>
+      <div class="signal-grid">
+        <article class="card signal">
+          <div class="signal-head"><h3>«ВЬЮГА»</h3><span class="time-badge">180 с</span></div>
+          <p>Участие в действиях при чрезвычайных ситуациях.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ПУРГА»</h3><span class="time-badge">90 с</span></div>
+          <p>Участие в специальной операции при совершении диверсионно-террористических актов.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ПУРГА-1»</h3><span class="time-badge">120 с</span></div>
+          <p>Участие в спецоперации по ликвидации незаконных вооружённых формирований.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ПУРГА-2»</h3><span class="time-badge">90 с</span></div>
+          <p>Участие в спецоперации по освобождению заложников.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ГРОЗА-1»</h3><span class="time-badge">30 с</span></div>
+          <p>Предупреждение и пресечение угона автотранспорта и гусеничной техники.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ГРОЗА-2»</h3><span class="time-badge">60 с</span></div>
+          <p>Предупреждение и пресечение угона речного транспорта.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ГРОЗА-3»</h3><span class="time-badge">30 с</span></div>
+          <p>Предупреждение и пресечение угона воздушных судов.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ГОЛОЛЁД»</h3><span class="time-badge">180 с</span></div>
+          <p>Пресечение массовых беспорядков в населённых пунктах.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ГОЛОЛЁД-2»</h3><span class="time-badge">60 с</span></div>
+          <p>Пресечение захвата важных государственных объектов.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ТУМАН»</h3><span class="time-badge">30 с</span></div>
+          <p>Операция по розыску вооружённых дезертиров.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«КРЕПОСТЬ»</h3><span class="time-badge muted-badge">—</span></div>
+          <p>Пресечение захвата собственных объектов.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ТАЙФУН»</h3><span class="time-badge muted-badge">—</span></div>
+          <p>Ликвидация последствий чрезвычайных ситуаций.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«ПЕРЕХВАТ»</h3><span class="time-badge muted-badge">—</span></div>
+          <p>Розыск автотранспорта войсковой части.</p>
+        </article>
+        <article class="card signal">
+          <div class="signal-head"><h3>«КОВЁР»</h3><span class="time-badge muted-badge">—</span></div>
+          <p>Закрытие воздушного пространства области.</p>
+        </article>
+      </div>
+
+      <h2>Прочие сигналы</h2>
+      <div class="chip-row chip-lg">
+        <span class="chip">СБОР</span>
+        <span class="chip">ТРЕВОГА</span>
+        <span class="chip">УЧЕБНО-БОЕВАЯ ТРЕВОГА</span>
+        <span class="chip">БОЕВАЯ ТРЕВОГА</span>
+      </div>
+
+      <h2>Действия личного состава</h2>
+      <div class="table-wrap">
+        <table class="data-table">
+          <thead>
+            <tr><th>Сигнал</th><th>Действия</th><th class="nowrap">Сбор</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="code">ВЬЮГА</span></td><td>Построить личный состав части на парковке, ждать дальнейших указаний.</td><td class="nowrap"><span class="time-badge">180 с</span></td></tr>
+            <tr><td><span class="code">ПУРГА</span></td><td>Специальные отряды войсковой части строятся на парковке в полной боевой готовности, ждут указаний.</td><td class="nowrap"><span class="time-badge">90 с</span></td></tr>
+            <tr><td><span class="code">ПУРГА-1</span></td><td>Личный состав части в полной боевой готовности строится на парковке, ожидает указаний.</td><td class="nowrap"><span class="time-badge">120 с</span></td></tr>
+            <tr><td><span class="code">ПУРГА-2</span></td><td>Специальные отряды части строятся на парковке в полной боевой готовности, ждут указаний.</td><td class="nowrap"><span class="time-badge">90 с</span></td></tr>
+            <tr><td><span class="code">ГРОЗА-1</span></td><td>Спецотряды части с отрядами военной полиции выдвигаются на перехват и пресечение угона транспорта незамедлительно.</td><td class="nowrap"><span class="time-badge">30 с</span></td></tr>
+            <tr><td><span class="code">ГРОЗА-2</span></td><td>В воздух поднимаются вертолёты Ка-50 для разведки и преследования. Спецотряды грузятся в катера (при отсутствии — арендуются на причале) и отправляются в погоню.</td><td class="nowrap"><span class="time-badge">60 с</span></td></tr>
+            <tr><td><span class="code">ГРОЗА-3</span></td><td>Объявляется сигнал «КОВЁР». В воздух поднимаются вертолёты Ка-50 и истребители Су-47. При обнаружении воздушного судна применяются меры принуждения к посадке. При сопротивлении запрашивается разрешение на открытие огня.</td><td class="nowrap"><span class="time-badge">30 с</span></td></tr>
+            <tr><td><span class="code">ГОЛОЛЁД</span></td><td>Личный состав части собирается на парковке.</td><td class="nowrap"><span class="time-badge">180 с</span></td></tr>
+            <tr><td><span class="code">ГОЛОЛЁД-2</span></td><td>Личный состав поднимается по боевой тревоге на парковке.</td><td class="nowrap"><span class="time-badge">60 с</span></td></tr>
+            <tr><td><span class="code">ТУМАН</span></td><td>Спецотряды армии с отрядами военной полиции выдвигаются на поиск и задержание или ликвидацию дезертиров.</td><td class="nowrap"><span class="time-badge">30 с</span></td></tr>
+            <tr><td><span class="code">КРЕПОСТЬ</span></td><td>Полная изоляция войсковой части: никто не въезжает и не влетает, никто не выезжает и не вылетает. Личный состав укрепляет бункер, КПП-1, КПП-2, казарму и склад. Разрешён огонь на поражение по любому, кто нарушил режим, включая сотрудников правоохранительных органов. Исключение — сотрудники, находившиеся на территории до введения режима.</td><td class="nowrap"><span class="muted">—</span></td></tr>
+            <tr><td><span class="code">ПЕРЕХВАТ</span></td><td>План, аналогичный плану ГИБДД.</td><td class="nowrap"><span class="muted">—</span></td></tr>
+            <tr><td><span class="code">КОВЁР</span></td><td>Полное закрытие воздушного пространства. Незаконные воздушные суда принуждаются к посадке либо сбиваются.</td><td class="nowrap"><span class="muted">—</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="muted small">Для сигнала «ТАЙФУН» действия личного состава в оригинале не расписаны.</p>
+
+      <details class="acc">
+        <summary>Примечание: принуждение к посадке</summary>
+        <div class="acc-body">
+          <p>Перехватив неприятеля в воздухе, атакующий выполнял устрашающие манёвры — создавал угрозу повреждения самолёта, особенно несущих поверхностей. Подвергшись психической атаке, вражеский лётчик оказывался перед выбором: сесть на чужой территории или погибнуть.</p>
+        </div>
+      </details>
+    </section>
+
+
+    </div>
+  </main>
+</div>
+
+<footer class="site-footer">
+  <div>ДШР · Десантная Штурмовая Рота</div>
+  <div class="muted">Оригинал: sites.google.com/view/sily-spec-naznacheniya-vp · учебный материал ролевого проекта</div>
+</footer>
+
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>
+  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/js/app.js"></script>
+</body>
+</html>
