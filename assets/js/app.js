@@ -58,7 +58,10 @@
       else a.removeAttribute('aria-current');
     });
 
-    document.title = (TITLES[route] || 'ДШР') + ' — ДШР';
+    const activePage = pages.find(p => p.dataset.route === route);
+    const h1 = activePage ? activePage.querySelector('h1') : null;
+    const pageTitle = h1 ? h1.textContent.replace(/\s+/g, ' ').trim() : '';
+    document.title = (TITLES[route] || pageTitle || 'ДШР') + ' — ДШР';
 
     if (id) {
       const el = document.getElementById(id);
