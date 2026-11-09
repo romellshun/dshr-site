@@ -115,18 +115,18 @@ function doPost(e) {
 
     /* Одна попытка: без действующего разрешения повторный результат не принимается. */
     var attempts = findAttempts_(sheet, staticId, nickname);
-    var allowedByPermission = false;
-    if (attempts.length) {
-      allowedByPermission = findActivePermissionRow_(permSheet, staticId, nickname) > 0;
-      if (!allowedByPermission) {
-        return json({
-          ok: false,
-          error: 'already_attempted',
-          message: 'Тест уже пройден. Повторная попытка возможна только с разрешения командира.',
-          previous: attempts[attempts.length - 1]
-        });
-      }
+    var permRow = findActivePermissionRow_(permSheet, staticId, nickname);
+    if (attempts.length && !permRow) {
+      return json({
+        ok: false,
+        error: 'already_attempted',
+        message: 'Тест уже пройден. Повторная попытка возможна только с разрешения командира.',
+        previous: attempts[attempts.length - 1]
+      });
     }
+
+    /* Разрешение расходуется на ближайшую запись результата, даже если попыток ещё не было. */
+    var allowedByPermission = permRow > 0;
 
     var t = data.topics || {};
     var svu = t.svu || {};
