@@ -7,7 +7,7 @@
   const CONFIG = {
     /* URL веб-приложения Google Apps Script (…/exec).
        Пока пусто: результат показывается, но не отправляется. */
-    endpoint: '',
+    endpoint: 'https://script.google.com/macros/s/AKfycbz55obag8nH0dUV9ECRXznedL7wJZrMUrRSC_uptifjql-HUL2pOysNqjfwiOlELlg/exec',
     total: 30,
     durationMin: 45,
     passScore: 24,
