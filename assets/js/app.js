@@ -15,7 +15,8 @@
     assault: 'Штурм',
     negotiations: 'Переговоры',
     signals: 'Специальные сигналы',
-    robbery: 'Ограбления и выкуп'
+    robbery: 'Ограбления и выкуп',
+    help: 'Помощь'
   };
 
   const pages = $$('.page');
