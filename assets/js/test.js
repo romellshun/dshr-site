@@ -1268,7 +1268,9 @@
 
   function renderResult(result, auto, reason) {
     setTestingMode(false);
-    const wrong = result.answers.filter(a => !a.isCorrect);
+    /* В разбор попадают только вопросы, на которые кандидат дал ответ. */
+    const wrong = result.answers.filter(a => !a.isCorrect && a.chosen !== null);
+    const unanswered = result.answers.filter(a => a.chosen === null).length;
     const when = new Date(result.finishedAt);
     const dateStr = when.toLocaleString('ru-RU');
     const mins = Math.floor(result.durationSec / 60);
@@ -1296,16 +1298,21 @@
       ? '<h2 class="test-block-title">Разбор ошибок</h2>' +
         '<div class="test-review">' +
           wrong.map(a => {
-            const chosen = a.chosen === null ? 'Нет ответа' : a.chosen;
             return '<div class="test-review-item">' +
               '<p class="test-review-q">' + esc(a.question) + '</p>' +
-              '<p class="test-review-line bad"><span>Ваш ответ:</span> ' + esc(chosen) + '</p>' +
+              '<p class="test-review-line bad"><span>Ваш ответ:</span> ' + esc(a.chosen) + '</p>' +
               '<p class="test-review-line good"><span>Правильно:</span> ' + esc(a.correct) + '</p>' +
               '<p class="test-review-explain">' + esc(byId[a.id] ? byId[a.id].explain : '') + '</p>' +
             '</div>';
           }).join('') +
-        '</div>'
-      : '<div class="test-perfect">Все ответы верные — ошибок нет.</div>';
+        '</div>' +
+        (unanswered
+          ? '<p class="muted small">Без ответа осталось вопросов: ' + unanswered + ' — они засчитаны как ошибки и в разбор не входят.</p>'
+          : '')
+      : unanswered
+        ? '<h2 class="test-block-title">Разбор ошибок</h2>' +
+          '<div class="test-perfect">Ошибочных ответов нет. Без ответа осталось вопросов: ' + unanswered + ' — они засчитаны как ошибки.</div>'
+        : '<div class="test-perfect">Все ответы верные — ошибок нет.</div>';
 
     app.innerHTML =
       '<div class="test-shell">' +
@@ -1373,15 +1380,20 @@
       const t = r.topics[key];
       lines.push(t.name + ': ' + t.correct + ' / ' + t.total);
     });
-    const wrong = r.answers.filter(a => !a.isCorrect);
+    const wrong = r.answers.filter(a => !a.isCorrect && a.chosen !== null);
+    const unanswered = r.answers.filter(a => a.chosen === null).length;
     if (wrong.length) {
       lines.push('');
       lines.push('Ошибки:');
       wrong.forEach((a, i) => {
         lines.push((i + 1) + '. ' + a.question);
-        lines.push('   Ваш ответ: ' + (a.chosen === null ? 'нет ответа' : a.chosen));
+        lines.push('   Ваш ответ: ' + a.chosen);
         lines.push('   Правильно: ' + a.correct);
       });
+    }
+    if (unanswered) {
+      lines.push('');
+      lines.push('Без ответа: ' + unanswered + ' (засчитаны как ошибки)');
     }
     return lines.join('\n');
   }
