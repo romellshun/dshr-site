@@ -7,7 +7,7 @@
 <meta name="description" content="Учебные материалы подразделения: аттестация, разминирование СВУ, первая помощь, штурм, переговоры, специальные сигналы, правила ограблений и выкупа заложников, запреты и наказания для сотрудников, коды связи.">
 <meta name="theme-color" content="#0a0e13">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230a0e13'/%3E%3Cpath d='M16 5l9 4v7c0 6-4 9-9 11-5-2-9-5-9-11V9z' fill='none' stroke='%23f0b429' stroke-width='2'/%3E%3Cpath d='M16 12v9M11.5 16.5h9' stroke='%23f0b429' stroke-width='2'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="assets/css/styles.css?v=20261114c">
+<link rel="stylesheet" href="assets/css/styles.css?v=20261117a">
 </head>
 <body>
 <div class="progress" id="progress" aria-hidden="true"></div>
@@ -48,6 +48,10 @@
       <a href="#/home" data-nav="home">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5L12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/><path d="M9.5 21v-6h5v6"/></svg>
         <span>Главная</span>
+      </a>
+      <a href="#/contents" data-nav="contents">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13"/><circle cx="3.5" cy="6" r="1"/><circle cx="3.5" cy="12" r="1"/><circle cx="3.5" cy="18" r="1"/></svg>
+        <span>Оглавление</span>
       </a>
       <a href="#/attestation" data-nav="attestation">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4h6v3H9z"/><path d="M9 5.5H6a1 1 0 00-1 1V20a1 1 0 001 1h12a1 1 0 001-1V6.5a1 1 0 00-1-1h-3"/><path d="M8.5 13l2 2 4.5-4.5"/></svg>
@@ -336,6 +340,175 @@
       </div>
     </section>
 
+    <!-- ==================== ОГЛАВЛЕНИЕ ==================== -->
+    <section class="page" data-route="contents" id="page-contents">
+      <div class="page-head">
+        <span class="eyebrow">Навигация</span>
+        <h1>Оглавление</h1>
+        <p class="lead">Все разделы сайта и их подразделы по актуальному содержанию материалов. Нажмите на пункт — сайт перейдёт к нужному блоку.</p>
+      </div>
+
+      <div class="toc-grid">
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">01</span>
+    <h2><a href="#/home">Главная</a></h2>
+    <span class="toc-count">3</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/home">Руководство подразделения</a></li>
+    <li><a href="#/home/home-codes">Коды связи</a></li>
+    <li><a href="#/home/home-docs">Документы</a></li>
+  </ol>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">02</span>
+    <h2><a href="#/attestation">Аттестация</a></h2>
+    <span class="toc-count">3</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/attestation/att-theory">Теория</a></li>
+    <li><a href="#/attestation/att-practice">Практика</a></li>
+    <li><a href="#/attestation/att-review">Что повторить</a></li>
+  </ol>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">03</span>
+    <h2><a href="#/test">Тест аттестации</a></h2>
+    <span class="toc-count">30 из 50</span>
+  </div>
+  <p class="toc-note">30 случайных вопросов, 35 минут, проходной балл 25 из 30. Вопросы по СВУ, первой помощи, переговорам, штурму и запретам главы 4.</p>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">04</span>
+    <h2><a href="#/svu">СВУ</a></h2>
+    <span class="toc-count">11</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/svu/svu-types">Типы СВУ</a></li>
+    <li><a href="#/svu/svu-kinds">Виды СВУ</a></li>
+    <li><a href="#/svu/svu-order">Порядок разминирования</a></li>
+    <li><a href="#/svu/svu-components">Компоненты СВУ</a></li>
+    <li><a href="#/svu/svu-stretches">Растяжки</a></li>
+    <li><a href="#/svu/svu-belt">Пояс смертника</a></li>
+    <li><a href="#/svu/svu-not">Что не является СВУ</a></li>
+    <li><a href="#/svu/svu-pvv">Пластичные взрывчатые вещества</a></li>
+    <li><a href="#/svu/svu-terms">Термины</a></li>
+    <li><a href="#/svu/svu-gear">Снаряжение сапёра</a></li>
+    <li><a href="#/svu/svu-demo">Контролируемый подрыв</a></li>
+  </ol>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">05</span>
+    <h2><a href="#/first-aid">Первая помощь</a></h2>
+    <span class="toc-count">11</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/first-aid/fa-types">Виды помощи</a></li>
+    <li><a href="#/first-aid/fa-states">Состояния для оказания помощи</a></li>
+    <li><a href="#/first-aid/fa-algorithm">Алгоритм первой помощи</a></li>
+    <li><a href="#/first-aid/fa-tools">Средства и устройства</a></li>
+    <li><a href="#/first-aid/fa-urgent">Неотложные состояния</a></li>
+    <li><a href="#/first-aid/fa-bleeding">Кровотечения</a></li>
+    <li><a href="#/first-aid/fa-wounds">Ранения</a></li>
+    <li><a href="#/first-aid/fa-fractures">Переломы</a></li>
+    <li><a href="#/first-aid/fa-burns">Ожоги</a></li>
+    <li><a href="#/first-aid/fa-poisoning">Отравления</a></li>
+    <li><a href="#/first-aid/fa-kit">Тактическая аптечка</a></li>
+  </ol>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">06</span>
+    <h2><a href="#/assault">Штурм</a></h2>
+    <span class="toc-count">7</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/assault/asm-what">Что такое штурм</a></li>
+    <li><a href="#/assault/asm-kinds">Виды штурма</a></li>
+    <li><a href="#/assault/asm-when">Когда проводится штурм</a></li>
+    <li><a href="#/assault/asm-groups">Штурмовые группы</a></li>
+    <li><a href="#/assault/asm-rooms">Тактики зачистки помещений</a></li>
+    <li><a href="#/assault/asm-stairs">Штурм лестницы и действия «четвёрки»</a></li>
+    <li><a href="#/assault/asm-mobile">Мобильный штурм</a></li>
+  </ol>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">07</span>
+    <h2><a href="#/negotiations">Переговоры</a></h2>
+    <span class="toc-count">9</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/negotiations/neg-goals">Цели переговоров</a></li>
+    <li><a href="#/negotiations/neg-before">Действия до переговоров</a></li>
+    <li><a href="#/negotiations/neg-during">Действия во время переговоров</a></li>
+    <li><a href="#/negotiations/neg-questions">Список уточняющих вопросов</a></li>
+    <li><a href="#/negotiations/neg-forbidden">При переговорах запрещено</a></li>
+    <li><a href="#/negotiations/neg-rules">Негласные правила переговоров</a></li>
+    <li><a href="#/negotiations/neg-mistakes">Типичные ошибки</a></li>
+    <li><a href="#/negotiations/neg-techniques">Специальные приёмы</a></li>
+    <li><a href="#/negotiations/neg-ransom">Передача выкупа</a></li>
+  </ol>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">08</span>
+    <h2><a href="#/signals">Специальные сигналы</a></h2>
+    <span class="toc-count">3</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/signals/sig-list">Список сигналов</a></li>
+    <li><a href="#/signals/sig-other">Прочие сигналы</a></li>
+    <li><a href="#/signals/sig-actions">Действия личного состава</a></li>
+  </ol>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">09</span>
+    <h2><a href="#/robbery">Ограбления и выкуп</a></h2>
+    <span class="toc-count">5</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/robbery/rob-hostage">Захват заложников</a></li>
+    <li><a href="#/robbery/rob-security">Действия силовых структур</a></li>
+    <li><a href="#/robbery/rob-kidnap">Похищения людей</a></li>
+    <li><a href="#/robbery/rob-prices">Ценовая политика (денежный выкуп)</a></li>
+    <li><a href="#/robbery/rob-resources">Ценовая политика (ресурсы)</a></li>
+  </ol>
+</article>
+
+<article class="card toc-card">
+  <div class="toc-head">
+    <span class="toc-num">10</span>
+    <h2><a href="#/help">Помощь</a></h2>
+    <span class="toc-count">4</span>
+  </div>
+  <ol class="toc-list">
+    <li><a href="#/help/help-bans">Общие запреты</a></li>
+    <li><a href="#/help/help-form">Форма и транспорт</a></li>
+    <li><a href="#/help/help-duty">Служба и полномочия</a></li>
+    <li><a href="#/help/help-secret">Тайна, оружие, задержания</a></li>
+  </ol>
+</article>
+      </div>
+
+      <div class="disclaimer">
+        Оглавление собрано из заголовков разделов. Если нужного пункта нет — воспользуйтесь поиском вверху страницы.
+      </div>
+    </section>
     <!-- ==================== АТТЕСТАЦИЯ ==================== -->
     <section class="page" data-route="attestation" id="page-attestation">
       <div class="page-head">
@@ -347,7 +520,7 @@
       <div class="grid-2">
         <article class="card stage-card">
           <span class="stage-num">I</span>
-          <h2>Теория</h2>
+          <h2 id="att-theory">Теория</h2>
           <ul class="checklist">
             <li><label><input type="checkbox" data-key="att-1"><span>Разминирование СВУ</span></label></li>
             <li><label><input type="checkbox" data-key="att-2"><span>Оказание первой помощи</span></label></li>
@@ -359,7 +532,7 @@
 
         <article class="card stage-card">
           <span class="stage-num">II</span>
-          <h2>Практика</h2>
+          <h2 id="att-practice">Практика</h2>
           <ul class="checklist">
             <li><label><input type="checkbox" data-key="att-6"><span>Разминирование СВУ</span></label></li>
             <li><label><input type="checkbox" data-key="att-7"><span>Оказание первой помощи</span></label></li>
@@ -386,7 +559,7 @@
         <a class="btn btn-primary" href="#/test">Пройти тест</a>
       </div>
 
-      <h2>Что повторить</h2>
+      <h2 id="att-review">Что повторить</h2>
       <div class="quick-grid">
         <a class="quick-card" href="#/svu"><span class="quick-num">01</span><h3>СВУ</h3><p>Типы устройств и порядок обезвреживания.</p></a>
         <a class="quick-card" href="#/first-aid"><span class="quick-num">02</span><h3>Первая помощь</h3><p>Алгоритм и состояния пострадавшего.</p></a>
@@ -451,7 +624,7 @@
         </div>
       </details>
 
-      <h2>Виды СВУ</h2>
+      <h2 id="svu-kinds">Виды СВУ</h2>
       <p class="muted small">Всего четыре вида. От вида зависит способ обезвреживания — определять его нужно как можно точнее.</p>
       <div class="grid-4">
         <div class="card mini"><span class="mini-tag">01</span><h3>Механический</h3><p>Нажимные пластины, кнопки, растяжки, шестерни, рычаги.</p></div>
@@ -574,7 +747,7 @@
         <li><strong>Особо опасные компоненты.</strong> Химические компоненты, взрыватели и взрывчатые вещества извлечь или обезвредить известным способом.</li>
       </ol>
 
-      <h2>Компоненты СВУ</h2>
+      <h2 id="svu-components">Компоненты СВУ</h2>
 
       <details class="acc">
         <summary>Электронные компоненты</summary>
@@ -659,7 +832,7 @@
         </div>
       </details>
 
-      <h2>Растяжки</h2>
+      <h2 id="svu-stretches">Растяжки</h2>
       <div class="callout callout-info">
         <div>Растяжка — механизм, который активирует взрывное устройство (гранату, мину или взрыватель) при натяжении связанного с ним объекта. Используется как триггер, инициирующий детонатор. В растяжке могут применяться как механические, так и электронные компоненты. Мина-растяжка — замаскированная мина, взрывающаяся при натяжении проволоки.</div>
       </div>
@@ -709,7 +882,7 @@
         </div>
       </details>
 
-      <h2>Пояс смертника</h2>
+      <h2 id="svu-belt">Пояс смертника</h2>
       <div class="callout callout-danger">
         <div><strong>Обезвреживать СВУ на теле человека строго запрещено!</strong> Исключение: повреждения на человеке, которые мешают снять пояс или причинят больший ущерб — например, нож, воткнутый в туловище через пояс.</div>
       </div>
@@ -737,7 +910,7 @@
 /me кладет шашку в бронированный кейс, закрывает, вешает на разгрузку
 /do СВУ обезврежено.</code></pre>
 
-      <h2>Что не является СВУ</h2>
+      <h2 id="svu-not">Что не является СВУ</h2>
       <div class="callout callout-info">
         <div>К СВУ не относятся С4, противопехотные и противотанковые мины и другие законные взрывные устройства, созданные на специальных заводах. Они не считаются СВУ, если используются по законному назначению и не являются компонентом СВУ. Если мины, С4, тротил или пластид произведены кустарно — это СВУ.</div>
       </div>
@@ -784,7 +957,7 @@
         </div>
       </details>
 
-      <h2>Пластичные взрывчатые вещества</h2>
+      <h2 id="svu-pvv">Пластичные взрывчатые вещества</h2>
       <p>ПВВ — взрывчатые вещества и смеси, обладающие пластичностью. Легко деформируются от незначительных усилий и сохраняют приданную форму неограниченное время в условиях эксплуатационных температур.</p>
       <div class="callout callout-info">
         <div>Сами по себе ПВВ не опасны: без взрывателя детонации не будет. Задача оперативника — не уничтожить пластид, а обезвредить и эвакуировать его. Контролируемый подрыв пластида не нужен: это инструмент, который в правильных целях полезен и эффективен.</div>
@@ -828,7 +1001,7 @@
         <li><strong>Дополнительные компоненты.</strong> Таймер, провода, транзисторы, телефон, рация, антенны.</li>
       </ol>
 
-      <h2>Термины</h2>
+      <h2 id="svu-terms">Термины</h2>
       <div class="term-grid">
         <div class="term"><span class="term-key">СВУ</span><span>Самодельное взрывное устройство, изготовленное в кустарных условиях</span></div>
         <div class="term"><span class="term-key">ПВВ</span><span>Пластичные взрывчатые вещества</span></div>
@@ -839,7 +1012,7 @@
         <div class="term"><span class="term-key">Генератор радиопомех</span><span>Забивает эфир шумом и исключает дистанционный подрыв</span></div>
       </div>
 
-      <h2>Снаряжение сапёра</h2>
+      <h2 id="svu-gear">Снаряжение сапёра</h2>
       <p>Кроме обычного снаряжения сапёр должен иметь рабочие инструменты. Они переносятся в жилете, подсумке и рюкзаке. Конкретный перечень зависит от ситуации — ниже примерный набор.</p>
       <div class="grid-2">
         <ul class="bullets">
@@ -945,7 +1118,7 @@
       </ul>
       <p class="muted small">В армии чаще всего используются ОВР-2-02 и ОВР-3Ш. ОВР-3Ш — штурмовой комплект: позволяет проводить и минно-взрывные мероприятия, и штурмовые действия. Для химической, радиационной и биологической защиты применяются ОЗК, ПМК-2 или другие армейские комплекты, в зависимости от ситуации — костюмы с замкнутой системой дыхания.</p>
 
-      <h2>Контролируемый подрыв</h2>
+      <h2 id="svu-demo">Контролируемый подрыв</h2>
       <p>Проводится в безлюдных местах, далеко от инфраструктуры. Посреди полигона выкапывается яма глубиной около 30 сантиметров. Туда из бронированного кейса выкладываются все взрывоопасные компоненты, подключаются к детонатору и взрываются.</p>
       <pre class="rp"><code>/me достает саперную лопату, выкапывает яму
 /me снимает с разгрузки бронированный кейс, открывает его и ставит на землю, после чего достает тротиловую шашку и кладет в яму
@@ -972,7 +1145,7 @@
         <div><strong>Важно.</strong> Это учебный материал подразделения. Он не заменяет реальную медицинскую подготовку и не является инструкцией для оказания помощи в жизни.</div>
       </div>
 
-      <h2>Виды помощи</h2>
+      <h2 id="fa-types">Виды помощи</h2>
       <div class="grid-3">
         <article class="card">
           <span class="badge badge-accent">ПП</span>
@@ -1003,7 +1176,7 @@
         </ul>
       </div>
 
-      <h2>Состояния для оказания помощи</h2>
+      <h2 id="fa-states">Состояния для оказания помощи</h2>
       <div class="condition-grid">
         <a class="condition" href="#/first-aid/fa-faint"><span>01</span>Отсутствие сознания</a>
         <a class="condition" href="#/first-aid/fa-cpr"><span>02</span>Остановка дыхания и кровообращения</a>
@@ -1024,7 +1197,7 @@
         <li><strong>Комфорт.</strong> Обеспечить пострадавшему максимально возможный комфорт.</li>
       </ol>
 
-      <h2>Средства и устройства</h2>
+      <h2 id="fa-tools">Средства и устройства</h2>
       <div class="callout callout-warn">
         <div><strong>Перед обезболиванием спросить:</strong> «Имеются ли у вас какие-то противопоказания?» Если ответ «да» — применить другое обезболивающее, задав тот же вопрос. Человеку без сознания обезболивающее не вводят.</div>
       </div>
@@ -1038,7 +1211,7 @@
         <div class="card mini"><h3>«Р-505 Пеносепт»</h3><p>Пенный антисептик без спирта: снижает угрозу кожных инфекций и обеспечивает пролонгированное антимикробное действие.</p></div>
       </div>
 
-      <h2>Неотложные состояния</h2>
+      <h2 id="fa-urgent">Неотложные состояния</h2>
 
       <details class="acc" id="fa-faint">
         <summary>Обморок</summary>
@@ -1495,7 +1668,7 @@
         </div>
       </details>
 
-      <h2>Ранения</h2>
+      <h2 id="fa-wounds">Ранения</h2>
 
       <details class="acc">
         <summary>Пулевое ранение</summary>
@@ -1833,7 +2006,7 @@
         </div>
       </details>
 
-      <h2>Тактическая аптечка</h2>
+      <h2 id="fa-kit">Тактическая аптечка</h2>
       <div class="grid-2">
         <ul class="bullets">
           <li>Подсумки под турникеты с турникетами CAT Gen 7 — 2 шт.</li>
@@ -1870,13 +2043,13 @@
         </div>
       </div>
 
-      <h2>Что такое штурм</h2>
+      <h2 id="asm-what">Что такое штурм</h2>
       <div class="card">
         <p><strong>Штурм</strong> — решительная атака крепости, укреплённой позиции противника, а также активные действия, направленные на достижение цели путём преодоления трудностей.</p>
         <p class="muted small">Штурму должна предшествовать тщательная разведка и подготовка.</p>
       </div>
 
-      <h2>Виды штурма</h2>
+      <h2 id="asm-kinds">Виды штурма</h2>
       <div class="grid-2">
         <article class="card">
           <h3>Полицейский</h3>
@@ -1888,7 +2061,7 @@
         </article>
       </div>
 
-      <h2>Когда проводится штурм</h2>
+      <h2 id="asm-when">Когда проводится штурм</h2>
       <ol class="steps">
         <li>Заложнику угрожает опасность — причинён тяжкий вред здоровью.</li>
         <li>Требования невыполнимы. Например: уволиться из организации, предоставить несуществующий автомобиль или большое количество дорогих машин, предоставить человека как нового заложника, передать СВУ или другие взрывные устройства (не считая патронов), убить кого-либо.</li>
@@ -1898,7 +2071,7 @@
         <div>При штурме стоит стараться задержать как можно больше преступников: чем больше нападавших — тем больше информации. Исключение — отбитие крупного нападения на склад ВЧ.</div>
       </div>
 
-      <h2>Штурмовые группы</h2>
+      <h2 id="asm-groups">Штурмовые группы</h2>
       <div class="grid-2">
         <article class="card">
           <span class="badge badge-accent">1</span>
@@ -1927,7 +2100,7 @@
         </article>
       </div>
 
-      <h2>Тактики зачистки помещений</h2>
+      <h2 id="asm-rooms">Тактики зачистки помещений</h2>
 
       <div class="tactic-grid">
         <article class="card tactic">
@@ -1971,7 +2144,7 @@
         </article>
       </div>
 
-      <h2>Штурм лестницы и действия «четвёрки»</h2>
+      <h2 id="asm-stairs">Штурм лестницы и действия «четвёрки»</h2>
       <div class="grid-2">
         <article class="card">
           <h3>Штурм лестницы</h3>
@@ -1992,7 +2165,7 @@
         </div>
       </div>
 
-      <h2>Мобильный штурм</h2>
+      <h2 id="asm-mobile">Мобильный штурм</h2>
       <div class="card">
         <p>Автомобиль <strong>А</strong>, в котором находятся заложник и преступники, полностью блокируется четырьмя машинами <strong>В</strong>. Автомобиль не может двинуться ни вперёд, ни назад, а преступники не могут его покинуть. Ситуация аналогична блокированию здания, и группа захвата реализует свою цель.</p>
         <p>Как только автомобиль остановлен, группа действует быстро, чтобы не дать причинить заложнику вред. Если снайперы заранее заняли позиции рядом, они могут немедленно ликвидировать преступника или информировать группу о расположении людей в машине.</p>
@@ -2061,7 +2234,7 @@
         <p><strong>Переговоры</strong> — коммуникация между сторонами для достижения своих целей, при которой каждая из сторон имеет равные возможности в контроле ситуации и принятии решения, закрепляемого договором.</p>
       </div>
 
-      <h2>Цели переговоров</h2>
+      <h2 id="neg-goals">Цели переговоров</h2>
       <div class="grid-2">
         <article class="card"><span class="badge badge-accent">01</span><h3>Контакт</h3><p>Установить психологический контакт с преступниками для сохранения жизни заложников.</p></article>
         <article class="card"><span class="badge badge-accent">02</span><h3>Информация</h3><p>Узнать максимум информации за минимальное время: количество преступников, мотивы, настрой, наличие и состояние заложников.</p></article>
@@ -2073,7 +2246,7 @@
         <div>Если преступники предлагают пройти и посмотреть на заложника — идти за ними запрещено. Исключение: угроза жизни заложнику.</div>
       </div>
 
-      <h2>Действия до переговоров</h2>
+      <h2 id="neg-before">Действия до переговоров</h2>
       <ol class="steps">
         <li>Снять все шевроны, погоны и отличительные знаки.</li>
         <li>Сложить всё оружие, включая ножи.</li>
@@ -2087,7 +2260,7 @@
 /me выкладывает все имеющиеся документы, устройства фото-, аудио- и видеозаписи
 /me достает из полевой сумки маску и белую повязку, одевает маску на голову, белую повязку на предплечье</code></pre>
 
-      <h2>Действия во время переговоров</h2>
+      <h2 id="neg-during">Действия во время переговоров</h2>
       <div class="callout callout-info">
         <div>Чтобы оттянуть как можно больше времени, переговоры ведите, описывая весь разговор в чат — не спеша.</div>
       </div>
@@ -2113,7 +2286,7 @@
         <div>Обязательно обращайте внимание на все автомобили и иные средства передвижения на территории. Всю информацию о них, как и всё полученное в ходе переговоров, записывайте и в точности передавайте оперштабу.</div>
       </div>
 
-      <h2>Список уточняющих вопросов</h2>
+      <h2 id="neg-questions">Список уточняющих вопросов</h2>
       <p class="muted small">Вопросы задаются согласно требованиям. Если просят деньги — задаются все вопросы из пункта «Деньги». Обязательные вопросы задаются независимо от требований. Можно добавлять свои, не перегибая.</p>
 
       <details class="acc">
@@ -2176,7 +2349,7 @@
         </div>
       </details>
 
-      <h2>При переговорах запрещено</h2>
+      <h2 id="neg-forbidden">При переговорах запрещено</h2>
       <div class="grid-2">
         <div class="card mini danger-card"><h3>Игнорировать требования</h3><p>Нельзя игнорировать требования похитителей.</p></div>
         <div class="card mini danger-card"><h3>Рисковать заложниками</h3><p>Нельзя как-либо рисковать жизнью заложников.</p></div>
@@ -2186,7 +2359,7 @@
         <div class="card mini danger-card"><h3>Идти за захватчиками</h3><p>Запрещено идти за захватчиком. Исключение: угроза жизни заложнику или переговорщику.</p></div>
       </div>
 
-      <h2>Негласные правила переговоров</h2>
+      <h2 id="neg-rules">Негласные правила переговоров</h2>
       <ol class="steps steps-compact">
         <li><strong>Никогда не говори «никогда».</strong> Предложения строить в позитивной форме. Не говорить: «нет, не могу», «это невозможно», «нельзя выполнить это требование».</li>
         <li><strong>Разговаривай постоянно.</strong> Поддерживать вербальный и визуальный контакт, оценивать эмоциональное и физическое состояние преступника, улавливать страх, сомнения, скрытую угрозу, нерешительность, усталость.</li>
@@ -2204,7 +2377,7 @@
         <li><strong>Контролируй ситуацию</strong> и эмоциональный фон переговоров, не допускай их развития в нежелательном для правоохранительных органов направлении.</li>
       </ol>
 
-      <h2>Типичные ошибки</h2>
+      <h2 id="neg-mistakes">Типичные ошибки</h2>
       <ol class="steps steps-compact">
         <li>Переход со спокойного, «разумного» диалога на угрозы, крик и ругань.</li>
         <li>Частая ссылка на свою некомпетентность.</li>
@@ -2217,7 +2390,7 @@
         <li>В обращении с преступниками не используются психологические технологии достижения доверия.</li>
       </ol>
 
-      <h2>Специальные приёмы</h2>
+      <h2 id="neg-techniques">Специальные приёмы</h2>
       <details class="acc">
         <summary>Приёмы ведения переговоров</summary>
         <div class="acc-body">
@@ -2233,7 +2406,7 @@
         </div>
       </details>
 
-      <h2>Передача выкупа</h2>
+      <h2 id="neg-ransom">Передача выкупа</h2>
       <div class="card">
         <p>Переговорщиком может быть любое должностное лицо, представляющее интересы властей: губернатор, министры, руководство полиции, оперативники ФСБ. Как правило, это сотрудник ФСБ, назначенный командующим спецоперацией или оперативным штабом.</p>
         <ul class="bullets">
@@ -2318,7 +2491,7 @@
         </article>
       </div>
 
-      <h2>Прочие сигналы</h2>
+      <h2 id="sig-other">Прочие сигналы</h2>
       <div class="chip-row chip-lg">
         <span class="chip">СБОР</span>
         <span class="chip">ТРЕВОГА</span>
@@ -2326,7 +2499,7 @@
         <span class="chip">БОЕВАЯ ТРЕВОГА</span>
       </div>
 
-      <h2>Действия личного состава</h2>
+      <h2 id="sig-actions">Действия личного состава</h2>
       <div class="table-wrap">
         <table class="data-table">
           <thead>
@@ -2624,7 +2797,7 @@
 
         <div class="help-grid">
           <div class="help-col">
-            <h2 class="help-col-title">Общие запреты</h2>
+            <h2 class="help-col-title" id="help-bans">Общие запреты</h2>
 
             <div class="help-item">
               <span class="help-key">4.1</span>
@@ -2660,7 +2833,7 @@
           </div>
 
           <div class="help-col">
-            <h2 class="help-col-title">Форма и транспорт</h2>
+            <h2 class="help-col-title" id="help-form">Форма и транспорт</h2>
 
             <div class="help-item">
               <span class="help-key">4.5</span>
@@ -2699,7 +2872,7 @@
           </div>
 
           <div class="help-col">
-            <h2 class="help-col-title">Служба и полномочия</h2>
+            <h2 class="help-col-title" id="help-duty">Служба и полномочия</h2>
 
             <div class="help-item">
               <span class="help-key">4.6</span>
@@ -2736,7 +2909,7 @@
           </div>
 
           <div class="help-col">
-            <h2 class="help-col-title">Тайна, оружие, задержания</h2>
+            <h2 class="help-col-title" id="help-secret">Тайна, оружие, задержания</h2>
 
             <div class="help-item">
               <span class="help-key">4.12</span>
@@ -2783,6 +2956,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script src="assets/js/test.js?v=20261116b"></script>
-<script src="assets/js/app.js?v=20261110d"></script>
+<script src="assets/js/app.js?v=20261117a"></script>
 </body>
 </html>

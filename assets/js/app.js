@@ -9,6 +9,7 @@
 
   const TITLES = {
     home: 'Главная',
+    contents: 'Оглавление',
     attestation: 'Аттестация',
     svu: 'СВУ',
     'first-aid': 'Первая помощь',
@@ -125,6 +126,7 @@
   function buildIndex() {
     pages.forEach(page => {
       const route = page.dataset.route;
+      if (route === 'contents') return;
       const h1 = page.querySelector('h1');
       let h2 = h1 ? h1.textContent.trim() : TITLES[route];
       let h3 = '';

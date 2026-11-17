@@ -1544,3 +1544,60 @@ body.is-testing .page { min-height: 60vh; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
+
+/* ---------- Оглавление ---------- */
+.toc-grid {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-bottom: 18px;
+  align-items: start;
+}
+.toc-card { padding: 18px 20px; }
+.toc-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.toc-num {
+  font-size: .7rem;
+  letter-spacing: .12em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.toc-head h2 { margin: 0; font-size: 1rem; line-height: 1.3; }
+.toc-head h2 a { color: inherit; text-decoration: none; }
+.toc-head h2 a:hover { color: var(--accent); }
+.toc-count { margin-left: auto; font-size: .7rem; color: var(--muted); white-space: nowrap; }
+.toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2px;
+  counter-reset: toc;
+}
+.toc-list li { counter-increment: toc; }
+.toc-list a {
+  display: flex;
+  gap: 8px;
+  padding: 5px 8px;
+  margin: 0 -8px;
+  border-radius: var(--radius-sm);
+  font-size: .84rem;
+  color: var(--muted);
+  text-decoration: none;
+}
+.toc-list a::before {
+  content: counter(toc, decimal-leading-zero);
+  font-size: .66rem;
+  line-height: 1.75;
+  color: color-mix(in srgb, var(--accent) 70%, transparent);
+  font-variant-numeric: tabular-nums;
+  min-width: 1.8em;
+}
+.toc-list a:hover { color: var(--text); background: var(--surface-2); }
+.toc-note { margin: 0; font-size: .82rem; color: var(--muted); }
